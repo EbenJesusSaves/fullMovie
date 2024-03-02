@@ -26,10 +26,13 @@ export const CustomBottomTab = ({ state, descriptors, navigation }) => {
   };
   const selectIcon = (routeName) => {
     switch (routeName) {
-      case "index":
+      case "home":
         return "home";
-      case "settings":
-      case "testNav":
+      case "explore":
+        return "compass";
+      case "saved":
+        return "heart";
+      case "profile":
         return "user";
       default:
         return "home";

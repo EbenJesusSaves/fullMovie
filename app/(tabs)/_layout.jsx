@@ -23,16 +23,23 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="explore"
         options={{
-          tabBarLabel: "Settings",
-          title: "Settings",
+          tabBarLabel: "Explore",
+          title: "Explore",
         }}
       />
       <Tabs.Screen
-        name="testNav"
+        name="saved"
         options={{
-          title: "testNav",
+          title: "saved",
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "profile",
           href: null,
         }}
       />

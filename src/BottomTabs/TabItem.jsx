@@ -7,14 +7,17 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import Feather from "react-native-vector-icons/Feather";
-
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Fontisto } from "@expo/vector-icons";
 import usePath from "../utils/Usepaths";
 import { SCREEN_WIDTH } from "../UI";
 import { getPathXCenterByIndex } from "../utils/Paths";
 
 const ICON_SIZE = 25;
 const LABEL_WIDTH = SCREEN_WIDTH / 4;
-const AnimatedIcon = Animated.createAnimatedComponent(Feather);
+const AnimatedIcon =
+  Animated.createAnimatedComponent(Feather) ||
+  Animated.createAnimatedComponent(Fontisto);
 const TabItem = ({ label, icon, index, activeIndex, onTabPress }) => {
   const { curvedPaths } = usePath();
   const animatedActiveIndex = useSharedValue(activeIndex);
