@@ -10,7 +10,6 @@ export default function TabLayout() {
         tabBarStyle: {
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "blue",
         },
       }}
       tabBar={(props) => <CustomBottomTab {...props} />}

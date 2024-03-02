@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     flexDirection: "row",
     width: "100%",
-    backgroundColor: "#0000",
   },
   shadowMd: {
     elevation: 3,
