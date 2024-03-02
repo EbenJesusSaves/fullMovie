@@ -6,7 +6,13 @@ import CustomBottomTab from "../../src/BottomTabs/CustomBottomTab";
 export default function TabLayout() {
   return (
     <Tabs
-      screenOptions={{ tabBarActiveTintColor: "blue" }}
+      screenOptions={{
+        tabBarStyle: {
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "blue",
+        },
+      }}
       tabBar={(props) => <CustomBottomTab {...props} />}
     >
       <Tabs.Screen

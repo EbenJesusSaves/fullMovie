@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
   },
   tabBarContainer: {
     position: "absolute",
+    justifyContent: "center",
     bottom: 0,
     zIndex: 2,
   },
@@ -98,6 +99,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     flexDirection: "row",
     width: "100%",
+    backgroundColor: "#0000",
   },
   shadowMd: {
     elevation: 3,

@@ -46,8 +46,8 @@ const TabItem = ({ label, icon, index, activeIndex, onTabPress }) => {
     activeIndex === index + 1 ? "white" : "rgba(128,128,128,0.8)"
   );
 
-  //Adjust Icon color for this first render
   useEffect(() => {
+    console.log(activeIndex);
     animatedActiveIndex.value = activeIndex;
     if (activeIndex === index + 1) {
       iconColor.value = withTiming("white");
