@@ -23,6 +23,16 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="testNav"
+        options={{
+          title: "testNav",
+          href: null,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome size={28} name="cog" color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
