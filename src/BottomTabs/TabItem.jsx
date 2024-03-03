@@ -50,7 +50,6 @@ const TabItem = ({ label, icon, index, activeIndex, onTabPress }) => {
   );
 
   useEffect(() => {
-    //  console.log(activeIndex);
     animatedActiveIndex.value = activeIndex;
     if (activeIndex === index + 1) {
       iconColor.value = withTiming("white");
