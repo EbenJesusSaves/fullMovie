@@ -5,15 +5,7 @@ import CustomBottomTab from "../../src/BottomTabs/CustomBottomTab";
 
 export default function TabLayout() {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarStyle: {
-          justifyContent: "center",
-          alignItems: "center",
-        },
-      }}
-      tabBar={(props) => <CustomBottomTab {...props} />}
-    >
+    <Tabs tabBar={(props) => <CustomBottomTab {...props} />}>
       <Tabs.Screen
         name="index"
         options={{

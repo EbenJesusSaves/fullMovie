@@ -7,7 +7,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { interpolatePath } from "react-native-redash";
+import { green, interpolatePath } from "react-native-redash";
 
 import TabItem from "./TabItem";
 import AnimatedCircle from "./AnimatedCircle";
