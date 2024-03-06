@@ -4,6 +4,7 @@ import { FlexBox, SmallText } from "../../UI/UtilStyles";
 import SwiperFlatList from "react-native-swiper-flatlist";
 import { baseAPI, staticImageLink } from "../../../apis/axios/config";
 import { Image } from "expo-image";
+import { Colors } from "../../UI";
 const colors = ["tomato", "thistle", "skyblue", "teal"];
 
 interface ApiRes {
@@ -42,10 +43,7 @@ export const GreetingsComponent = () => {
             <FlexBox>
                 <SmallText>Hello, Welcome back</SmallText>
             </FlexBox>
-            {/* <View>
-                <Image contentFit="cover" style={{ flex: 1, width: 'auto', height: 200 }} source={`https://image.tmdb.org/t/p/w500${trending?.results?.[0]?.backdrop_path}`} />
-                <Text style={styles.text}>{trending?.results?.[0]?.original_title}</Text>
-            </View> */}
+
             <SwiperFlatList
                 autoplay
                 autoplayDelay={2}
@@ -64,20 +62,23 @@ export const GreetingsComponent = () => {
                         }}
                     >
                         <Text style={{
-                            backgroundColor: " rgba(73, 73, 73, 0.4)",
-                            width: "auto",
+                            backgroundColor: " rgba(73, 73, 73, 0.5)",
+                            width: 30,
                             padding: 5,
                             position: "absolute",
                             color: "white",
-                            height: 40,
+                            height: 30,
+
                             zIndex: 11,
-                            borderWidth: 0.3,
-                            borderColor: "white",
-                            borderRadius: 15,
+                            borderWidth: 0.6,
+                            borderColor: "green",
+                            borderRadius: 14,
                             overflow: 'hidden',
                             elevation: 2,
-                            bottom: 40,
-                            fontWeight: '700'
+                            bottom: 15,
+                            left: 10,
+                            fontWeight: '700',
+                            textAlign: 'center'
 
 
                         }}>
@@ -88,9 +89,10 @@ export const GreetingsComponent = () => {
                                 backgroundColor: " rgba(73, 73, 73, 0.4)",
                                 width: "auto",
                                 padding: 5,
+
                                 position: "absolute",
                                 color: "white",
-                                height: 40,
+                                height: 50,
                                 zIndex: 10,
                                 borderWidth: 0.3,
                                 borderColor: "white",
@@ -98,12 +100,18 @@ export const GreetingsComponent = () => {
                                 overflow: 'hidden',
                                 elevation: 2,
                                 bottom: 10,
-                                fontWeight: '700'
+                                fontWeight: '700',
+                                paddingLeft: 50,
+
 
 
                             }}
                         >
-                            {item.original_title}
+                            {item.original_title}{"\n"}
+                            <Text style={{ color: 'white', fontSize: 12, paddingTop: 2, fontWeight: '500' }}> <Text style={{ color: Colors.main }}>Release Date {''}
+                            </Text>
+
+                                {item.release_date}</Text>
                         </Text>
 
                         <Image
