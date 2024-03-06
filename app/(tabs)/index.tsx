@@ -3,6 +3,7 @@ import { FullContainer, ScrollContainer, SmallText } from "../../components/UI/U
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Navbar } from "../../components/NavBar/Navbar";
 import { GreetingsComponent } from "../../components/components/Home/GreetingsComponent";
+import { MoviesList } from "../../components/components/Home/MoviesList";
 
 export default function Tab() {
     return (
@@ -10,6 +11,7 @@ export default function Tab() {
             <Navbar />
             <ScrollContainer>
                 <GreetingsComponent />
+                <MoviesList />
             </ScrollContainer>
         </SafeAreaView>
     );

@@ -10,3 +10,7 @@ export const baseAPI = axios.create({
 });
 
 export const staticImageLink = "https://image.tmdb.org/t/p/";
+
+export const yifyApi = axios.create({
+  baseURL: "https://yts.mx/api/v2/",
+});
