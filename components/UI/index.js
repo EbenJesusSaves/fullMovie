@@ -6,6 +6,7 @@ const Colors = {
   dark_gray: "#666",
   nearlyRed: "#d80e16",
   brown: "#532517",
+  main: "#D0FF49",
 };
 export { Colors };
 

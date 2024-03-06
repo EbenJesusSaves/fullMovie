@@ -1,11 +1,13 @@
 import { View, Text } from "react-native";
 import { FullContainer } from "../../components/UI/UtilStyles";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Navbar } from "../../components/NavBar/Navbar";
 
 export default function Tab() {
     return (
-        <FullContainer>
-            <Text style={{ color: 'pink' }} >Tab [Home|Settings]</Text>
-        </FullContainer>
+        <SafeAreaView>
+            <Navbar />
+        </SafeAreaView>
     );
 }
 
