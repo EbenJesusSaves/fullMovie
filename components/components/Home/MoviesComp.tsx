@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Dimensions, Text, View } from "react-native";
+import { Dimensions, Text, TouchableOpacity, View } from "react-native";
 import { yifyApi } from "../../../apis/axios/config";
 import { FlashList, MasonryFlashList } from "@shopify/flash-list";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import styled from "styled-components";
 import { BlurView } from "expo-blur";
-import { Colors } from "../../UI";
+import { Colors, SCREEN_WIDTH } from "../../UI";
 import { FontAwesome } from "@expo/vector-icons";
-
-const windowWidth = Dimensions.get("window").width;
 
 export const MoviesList = () => {
   const [movies, setMovies] = useState<any>();
@@ -41,7 +39,7 @@ export const MoviesList = () => {
           const dynamicHeight = 240 + 500 * randomHeightPercentage;
 
           return (
-            <View
+            <TouchableOpacity
               style={{
                 alignItems: "center",
               }}
@@ -59,7 +57,7 @@ export const MoviesList = () => {
                     flex: 1,
 
                     height: dynamicHeight,
-                    width: windowWidth / 2 - 10,
+                    width: SCREEN_WIDTH / 2 - 10,
                     borderRadius: 15,
                   }}
                   source={item.medium_cover_image}
@@ -113,7 +111,7 @@ export const MoviesList = () => {
                   </Text>
                 </BlurView>
               </View>
-            </View>
+            </TouchableOpacity>
           );
         }}
         estimatedItemSize={10}
@@ -131,7 +129,7 @@ const TransparentView = styled(BlurView)`
   display: flex;
   flex-direction: row;
   bottom: 20px;
-  width: ${windowWidth / 2.3}px;
+  width: ${SCREEN_WIDTH / 2.3}px;
   height: 50px;
   border-radius: 16px;
   margin: 0;
