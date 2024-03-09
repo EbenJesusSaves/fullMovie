@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     width: LABEL_WIDTH,
   },
   label: {
-    color: "rgba(128,128,128,0.8)",
+    color: "rgb(255, 255, 255)",
     fontSize: 17,
   },
 });
