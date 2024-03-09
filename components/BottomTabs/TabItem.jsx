@@ -46,14 +46,13 @@ const TabItem = ({ label, icon, index, activeIndex, onTabPress }) => {
     };
   });
   const iconColor = useSharedValue(
-    activeIndex === index + 1 ? "white" : "rgba(128,128,128,0.8)"
+    activeIndex === index + 1 ? "black" : "rgba(128,128,128,0.8)"
   );
 
   useEffect(() => {
-    //  console.log(activeIndex);
     animatedActiveIndex.value = activeIndex;
     if (activeIndex === index + 1) {
-      iconColor.value = withTiming("white");
+      iconColor.value = withTiming("black");
     } else {
       iconColor.value = withTiming("rgba(128,128,128,0.8)");
     }
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
     width: LABEL_WIDTH,
   },
   label: {
-    color: "rgba(128,128,128,0.8)",
+    color: "rgb(255, 255, 255)",
     fontSize: 17,
   },
 });

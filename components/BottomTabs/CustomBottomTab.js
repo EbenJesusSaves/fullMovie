@@ -7,12 +7,12 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { interpolatePath } from "react-native-redash";
+import { green, interpolatePath } from "react-native-redash";
 
 import TabItem from "./TabItem";
 import AnimatedCircle from "./AnimatedCircle";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import { SCREEN_WIDTH } from "../UI";
+import { Colors, SCREEN_WIDTH } from "../UI";
 import usePath from "../utils/Usepaths";
 import { getPathXCenter } from "../utils/Paths";
 
@@ -58,7 +58,7 @@ export const CustomBottomTab = ({ state, descriptors, navigation }) => {
   return (
     <View style={styles.tabBarContainer}>
       <Svg width={SCREEN_WIDTH} height={tHeight} style={styles.shadowMd}>
-        <AnimatedPath fill={"white"} animatedProps={animatedProps} />
+        <AnimatedPath fill={Colors.sprimary} animatedProps={animatedProps} />
       </Svg>
       <AnimatedCircle circleX={circleXCoordinate} />
       <View
@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
   tabBarContainer: {
     position: "absolute",
     justifyContent: "center",
+
     bottom: 0,
     zIndex: 2,
   },
@@ -102,12 +103,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     flexDirection: "row",
     width: "100%",
+    backgroundColor: "rgba(0, 0, 0, 0)",
   },
   shadowMd: {
-    elevation: 3,
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    shadowOffset: { width: 0, height: 3 },
+    elevation: 2,
+    shadowColor: Colors.primary,
+    shadowOpacity: 0.9,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 4 },
   },
 });

@@ -1,17 +1,12 @@
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
-import CustomBottomTab from "../../src/BottomTabs/CustomBottomTab";
+import CustomBottomTab from "../../components/BottomTabs/CustomBottomTab";
 
 export default function TabLayout() {
   return (
     <Tabs
-      screenOptions={{
-        tabBarStyle: {
-          justifyContent: "center",
-          alignItems: "center",
-        },
-      }}
+      screenOptions={{ headerShown: false }}
       tabBar={(props) => <CustomBottomTab {...props} />}
     >
       <Tabs.Screen

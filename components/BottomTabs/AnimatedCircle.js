@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { FC } from "react";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
+import { Colors } from "../UI";
 
 const circleContainerSize = 50;
 
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     width: circleContainerSize,
     borderRadius: circleContainerSize,
     height: circleContainerSize,
-    backgroundColor: "#D94934",
+    backgroundColor: Colors.main,
     justifyContent: "center",
     alignItems: "center",
   },
