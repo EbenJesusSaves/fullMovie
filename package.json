@@ -15,6 +15,7 @@
     "d3-shape": "^3.2.0",
     "dotenv": "^16.4.5",
     "expo": "~50.0.8",
+    "expo-blur": "~12.9.2",
     "expo-constants": "~15.4.5",
     "expo-image": "~1.10.6",
     "expo-linking": "~6.2.2",

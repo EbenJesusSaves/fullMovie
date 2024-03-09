@@ -5,6 +5,7 @@ import SwiperFlatList from "react-native-swiper-flatlist";
 import { baseAPI, staticImageLink } from "../../../apis/axios/config";
 import { Image } from "expo-image";
 import { Colors } from "../../UI";
+import { BlurView } from "expo-blur";
 const colors = ["tomato", "thistle", "skyblue", "teal"];
 
 interface ApiRes {
@@ -66,64 +67,55 @@ export const GreetingsComponent = () => {
               style={{ flex: 1, height: 200, borderRadius: 15 }}
               source={`https://image.tmdb.org/t/p/w500${item.backdrop_path}`}
             />
-            <Text
+            <BlurView
+              intensity={10}
+              tint="systemChromeMaterialDark"
               style={{
-                backgroundColor: " rgba(73, 73, 73, 0.5)",
-                width: 30,
-                padding: 5,
                 position: "absolute",
-                color: "white",
-                height: 30,
-
-                zIndex: 11,
-                borderWidth: 0.6,
-                borderColor: "green",
-                borderRadius: 14,
-                overflow: "hidden",
-                elevation: 2,
-                bottom: 15,
-                left: 10,
-                fontWeight: "700",
-                textAlign: "center",
-              }}
-            >
-              {item.vote_average.toFixed(1)}
-            </Text>
-            <Text
-              style={{
-                backgroundColor: " rgba(73, 73, 73, 0.4)",
-                width: "auto",
-                padding: 5,
-
-                position: "absolute",
-                color: "white",
-                height: 50,
                 zIndex: 10,
-                borderWidth: 0.3,
-                borderColor: "white",
+                bottom: 15,
+                left: 20,
                 borderRadius: 15,
                 overflow: "hidden",
-                elevation: 2,
-                bottom: 10,
-                fontWeight: "700",
-                paddingLeft: 50,
+                padding: 5,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 10,
               }}
+              experimentalBlurMethod="dimezisBlurView"
             >
-              {item.original_title}
-              {"\n"}
               <Text
                 style={{
-                  color: "white",
-                  fontSize: 12,
-                  paddingTop: 2,
-                  fontWeight: "500",
+                  fontSize: 15,
+                  color: Colors.main,
+                  backgroundColor: "rgba(0, 0, 0, 0.4)",
+                  padding: 10,
+                  borderRadius: 20,
+                  overflow: "hidden",
+                  borderWidth: 0.4,
+                  borderColor: Colors.main,
                 }}
               >
-                {" "}
-                <Text style={{ color: Colors.main }}>Release Date {""}</Text>
-                {item.release_date}
+                {item.vote_average.toFixed(1)}
               </Text>
-            </Text>
+              <Text style={{ fontSize: 15, color: "white" }}>
+                {item.original_title}
+                {"\n"}
+                <Text
+                  style={{
+                    color: "white",
+                    fontSize: 10,
+                    paddingTop: 2,
+                    fontWeight: "500",
+                  }}
+                >
+                  <Text style={{ color: Colors.main }}>Release Date {""}</Text>
+                  {item.release_date}
+                </Text>
+              </Text>
+            </BlurView>
           </View>
         )}
       />
