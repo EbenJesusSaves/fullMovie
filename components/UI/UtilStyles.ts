@@ -1,6 +1,6 @@
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View, VirtualizedList } from "react-native";
 import styled from "styled-components";
-import { Colors } from ".";
+import { Colors, SCREEN_HEIGHT } from ".";
 
 export const FullContainer = styled(View)`
   flex: 1;
@@ -18,6 +18,8 @@ export const FlexBox = styled(View)`
 
 export const ScrollContainer = styled(ScrollView)`
   flex: 1;
+  overflow: scroll;
+  background-color: "pink";
 `;
 
 export const SmallText = styled(Text)`

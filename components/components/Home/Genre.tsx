@@ -32,7 +32,10 @@ export const Genre = () => {
   ];
 
   return (
-    <ScrollView horizontal style={{ flex: 1, padding: 10 }}>
+    <ScrollView
+      horizontal
+      style={{ flex: 1, padding: 10, backgroundColor: "green" }}
+    >
       {genres.map((genre) => (
         <GenreComp
           onPress={() => setActiveGenre(genre.name)}
@@ -59,7 +62,7 @@ export const Genre = () => {
 const GenreComp = styled(TouchableOpacity)`
   margin-right: 10px;
 
-  height: ${SCREEN_HEIGHT / 24}px;
+  height: 30px;
   background-color: ${Colors?.main};
   border-radius: 18px;
 
