@@ -3,6 +3,7 @@ import { Dimensions, Text, TouchableOpacity, View } from "react-native";
 import { yifyApi } from "../../../apis/axios/config";
 import { FlashList, MasonryFlashList } from "@shopify/flash-list";
 import { Card } from "../../UI/Card";
+import { SCREEN_HEIGHT } from "../../UI";
 
 //listEmpty Comp
 //list footer component
@@ -10,7 +11,7 @@ export const MoviesList = () => {
   const [movies, setMovies] = useState<any>();
 
   const fetchData = () => {
-    console.log("hi");
+    alert("hii");
   };
   useEffect(() => {
     (async () => {
@@ -31,8 +32,13 @@ export const MoviesList = () => {
       <MasonryFlashList
         data={movies?.movies}
         numColumns={2}
-        estimatedItemSize={314}
+        nestedScrollEnabled={true}
+        showsVerticalScrollIndicator={false}
+        onEndReachedThreshold={2}
+        estimatedItemSize={200}
         onEndReached={fetchData}
+        ListFooterComponent={<Text style={{ color: "white" }}>Hiiii</Text>}
+        estimatedListSize={{ height: 300, width: 300 }}
         renderItem={({ item }: any) => {
           const randomHeightPercentage = Math.random() * (0.2 - 0.1) + 0.1;
 
@@ -43,6 +49,7 @@ export const MoviesList = () => {
             <TouchableOpacity
               style={{
                 alignItems: "center",
+                flex: 1,
               }}
             >
               <Card item={item} dynamicHeight={dynamicHeight} />

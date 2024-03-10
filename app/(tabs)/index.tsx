@@ -15,9 +15,11 @@ export default function Tab() {
     <SafeAreaView style={{ flex: 1 }}>
       <Navbar />
       <ScrollContainer>
-        <GreetingsComponent />
-        <Genre />
-        <MoviesList />
+        <View style={{ flex: 1 }}>
+          <GreetingsComponent />
+          <Genre />
+          <MoviesList />
+        </View>
       </ScrollContainer>
     </SafeAreaView>
   );
