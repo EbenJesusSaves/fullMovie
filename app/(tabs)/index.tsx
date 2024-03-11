@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, ScrollViewBase, ScrollView } from "react-native";
 import {
   FullContainer,
   ScrollContainer,
@@ -9,18 +9,13 @@ import { Navbar } from "../../components/NavBar/Navbar";
 import { GreetingsComponent } from "../../components/components/Home/GreetingsComponent";
 import { MoviesList } from "../../components/components/Home/MoviesComp";
 import { Genre } from "../../components/components/Home/Genre";
+import { SCREEN_HEIGHT } from "../../components/UI";
 
 export default function Tab() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Navbar />
-      <ScrollContainer>
-        <View style={{ flex: 1 }}>
-          <GreetingsComponent />
-          <Genre />
-          <MoviesList />
-        </View>
-      </ScrollContainer>
+      <MoviesList />
     </SafeAreaView>
   );
 }

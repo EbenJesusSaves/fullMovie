@@ -4,6 +4,8 @@ import { yifyApi } from "../../../apis/axios/config";
 import { FlashList, MasonryFlashList } from "@shopify/flash-list";
 import { Card } from "../../UI/Card";
 import { SCREEN_HEIGHT } from "../../UI";
+import { GreetingsComponent } from "./GreetingsComponent";
+import { Genre } from "./Genre";
 
 //listEmpty Comp
 //list footer component
@@ -32,6 +34,12 @@ export const MoviesList = () => {
       <MasonryFlashList
         data={movies?.movies}
         numColumns={2}
+        ListHeaderComponent={
+          <View>
+            <GreetingsComponent />
+            <Genre />
+          </View>
+        }
         nestedScrollEnabled={true}
         showsVerticalScrollIndicator={false}
         onEndReachedThreshold={2}

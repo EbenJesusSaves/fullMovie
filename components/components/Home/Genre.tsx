@@ -32,10 +32,7 @@ export const Genre = () => {
   ];
 
   return (
-    <ScrollView
-      horizontal
-      style={{ flex: 1, padding: 10, backgroundColor: "green" }}
-    >
+    <ScrollView horizontal style={{ flex: 1, padding: 10 }}>
       {genres.map((genre) => (
         <GenreComp
           onPress={() => setActiveGenre(genre.name)}
