@@ -30,7 +30,7 @@ export const Card = ({ item, dynamicHeight }: Card) => {
           width: SCREEN_WIDTH / 2 - 10,
           borderRadius: 15,
         }}
-        source={item.medium_cover_image}
+        source={item?.medium_cover_image}
       />
       <TransparentView
         intensity={40}
@@ -44,24 +44,24 @@ export const Card = ({ item, dynamicHeight }: Card) => {
 
             borderRadius: 15,
           }}
-          source={item.medium_cover_image}
+          source={item?.medium_cover_image}
         />
         <View>
-          <Text style={{ color: "white" }}>{item.title_english}</Text>
+          <Text style={{ color: "white" }}>{item?.title_english}</Text>
           <Text style={{ color: "white", fontSize: 10 }}>
             <MaterialCommunityIcons
               name="movie-play"
               size={12}
               color={Colors.main}
             />{" "}
-            {item.genres[0]}
+            {item?.genres[0]}
             {"  "}
             <MaterialCommunityIcons
               name="movie-check-outline"
               size={12}
               color={Colors.main}
             />{" "}
-            {item.year}
+            {item?.year}
           </Text>
         </View>
       </TransparentView>
@@ -76,7 +76,7 @@ export const Card = ({ item, dynamicHeight }: Card) => {
         }}
       >
         <Text style={{ fontSize: 10, color: "white" }}>
-          <FontAwesome name="heart-o" size={12} color="white" /> {item.rating}
+          <FontAwesome name="heart-o" size={12} color="white" /> {item?.rating}
         </Text>
       </BlurView>
     </View>
