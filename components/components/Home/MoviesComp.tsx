@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Dimensions, Text, TouchableOpacity, View } from "react-native";
 import { yifyApi } from "../../../apis/axios/config";
 import { FlashList, MasonryFlashList } from "@shopify/flash-list";
@@ -6,13 +12,25 @@ import { Card } from "../../UI/Card";
 import { SCREEN_HEIGHT } from "../../UI";
 import { GreetingsComponent } from "./GreetingsComponent";
 import { Genre } from "./Genre";
-
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import LottieView from "lottie-react-native";
 //listEmpty Comp
 //list footer component
 export const MoviesList = () => {
   const [movies, setMovies] = useState<any>([]);
   let page = useRef(1);
+
+  // ref
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const snapPoints = useMemo(() => ["25%", "50%", "90%"], []);
+  // callbacks
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log("handleSheetChanges", index);
+  }, []);
+
+  const handleSnapPress = useCallback((index) => {
+    bottomSheetRef.current?.snapToIndex(index);
+  }, []);
   useEffect(() => {
     (async () => {
       try {
