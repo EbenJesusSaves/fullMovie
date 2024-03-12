@@ -72,7 +72,6 @@ export const MoviesList = () => {
     })();
   }, []);
   const fetchData = async () => {
-    console.log(page.current);
     page.current++;
     console.log(page.current);
     if (page.current === 1) return;
@@ -83,7 +82,6 @@ export const MoviesList = () => {
       } = await yifyApi.get(`list_movies.json?page=${page.current}`);
 
       setMovies((prev: any) => [...prev, ...data?.movies]);
-      console.log("hi");
     } catch (error) {
       console.log(error);
     }
@@ -137,7 +135,8 @@ export const MoviesList = () => {
               href={{
                 pathname: "details",
                 params: {
-                  name: item.summary,
+                  id: item.imdb_code,
+                  summary: item.summary,
                   medium_cover_image: item.medium_cover_image,
                   title_english: item.title_english,
                   background_image: item.background_image,

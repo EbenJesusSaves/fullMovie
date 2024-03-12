@@ -8,6 +8,8 @@ import { BlurView } from "expo-blur";
 import { FontAwesome } from "@expo/vector-icons";
 import { StyleProp, Text, View } from "react-native";
 import { Colors, SCREEN_WIDTH } from ".";
+import Animated from "react-native-reanimated";
+import { blurhash } from "./UtilStyles";
 
 interface Card {
   item: any;
@@ -15,6 +17,7 @@ interface Card {
 }
 
 export const Card = ({ item, dynamicHeight }: Card) => {
+  console.log(item);
   return (
     <View
       style={{
@@ -25,12 +28,13 @@ export const Card = ({ item, dynamicHeight }: Card) => {
       }}
     >
       <Image
+        placeholder={blurhash}
         style={{
           height: dynamicHeight,
           width: SCREEN_WIDTH / 2 - 10,
           borderRadius: 15,
         }}
-        source={item?.medium_cover_image}
+        source={{ uri: item?.medium_cover_image }}
       />
       <TransparentView
         intensity={40}
@@ -44,7 +48,7 @@ export const Card = ({ item, dynamicHeight }: Card) => {
 
             borderRadius: 15,
           }}
-          source={item?.medium_cover_image}
+          source={{ uri: item?.medium_cover_image }}
         />
         <View>
           <Text style={{ color: "white" }}>{item?.title_english}</Text>

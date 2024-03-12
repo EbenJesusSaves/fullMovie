@@ -62,7 +62,7 @@ function RootLayoutNav() {
             headerShown: false,
             title: params.name as string,
             presentation: "modal",
-            animation: "slide_from_bottom",
+            animation: "fade_from_bottom",
           }}
         />
       </Stack>

@@ -34,6 +34,8 @@
     "react-native-svg": "14.1.0",
     "react-native-swiper-flatlist": "^3.2.3",
     "react-native-vector-icons": "^10.0.3",
+    "react-native-webview": "13.6.4",
+    "react-native-youtube-iframe": "^2.3.0",
     "styled-components": "^6.1.8"
   },
   "devDependencies": {
