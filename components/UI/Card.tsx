@@ -17,7 +17,6 @@ interface Card {
 }
 
 export const Card = ({ item, dynamicHeight }: Card) => {
-  console.log(item);
   return (
     <View
       style={{

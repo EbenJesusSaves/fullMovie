@@ -31,7 +31,6 @@ export const GreetingsComponent = () => {
         );
 
         setTrending(data);
-        console.log(data);
       } catch (error) {
         console.log(error);
       }

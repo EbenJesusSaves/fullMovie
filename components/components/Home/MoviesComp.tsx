@@ -124,7 +124,7 @@ export const MoviesList = () => {
         estimatedListSize={{ height: 300, width: 300 }}
         renderItem={({ item }: any) => {
           const randomHeightPercentage = Math.random() * (0.2 - 0.1) + 0.1;
-          console.log(item);
+
           // Calculate the dynamic height
           const dynamicHeight = 240 + 500 * randomHeightPercentage;
 
@@ -135,7 +135,8 @@ export const MoviesList = () => {
               href={{
                 pathname: "details",
                 params: {
-                  id: item.imdb_code,
+                  imdb_id: item.imdb_code,
+                  id: item.id,
                   summary: item.summary,
                   medium_cover_image: item.medium_cover_image,
                   title_english: item.title_english,
