@@ -103,7 +103,44 @@ export default function Details() {
     imd: params.imdb_id as string,
     id: params.id as string,
   });
-  const [details, setDetails] = useState<Movie>(params);
+
+  const movie: Movie = {
+    background_image: "",
+    background_image_original: "",
+    cast: [],
+    date_uploaded: "",
+    date_uploaded_unix: 0,
+    description_full: "",
+    description_intro: "",
+    genres: [],
+    id: params.id as string,
+    imdb_code: "",
+    language: "",
+    large_cover_image: "",
+    large_screenshot_image1: "",
+    large_screenshot_image2: "",
+    large_screenshot_image3: "",
+    like_count: 0,
+    medium_cover_image: "",
+    medium_screenshot_image1: "",
+    medium_screenshot_image2: "",
+    medium_screenshot_image3: "",
+    mpa_rating: "",
+    rating: 0,
+    runtime: 0,
+    slug: "",
+    summary: params.summary as string,
+    small_cover_image: "",
+    title: "",
+    title_english: "",
+    title_long: "",
+    torrents: [],
+    url: "",
+    year: 0,
+    yt_trailer_code: "",
+  };
+
+  const [details, setDetails] = useState<Movie>(movie);
   const onStateChange = useCallback((state: any) => {
     setVidState(state);
   }, []);
@@ -137,7 +174,7 @@ export default function Details() {
       }
     })();
   }, [currentId]);
-  console.log(details);
+
   const togglePlaying = useCallback(() => {
     setPlaying((prev) => !prev);
   }, []);
@@ -193,6 +230,7 @@ export default function Details() {
           height: 400,
         }}
       />
+
       <View style={{ top: -420, justifyContent: "center" }}>
         <Text
           style={{
@@ -204,6 +242,7 @@ export default function Details() {
         >
           {details.title_english}
         </Text>
+
         <View
           style={{
             flex: 1,
@@ -237,6 +276,7 @@ export default function Details() {
           </CenteredView>
         </View>
         <SmallSpicer />
+
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <ViewWithMargin style={{ flex: 1, flexDirection: "row", gap: 30 }}>
             {movieDetails?.genres?.map((m) => (
@@ -254,7 +294,26 @@ export default function Details() {
             ))}
           </ViewWithMargin>
         </ScrollView>
+
         <View>
+          <SmallSpicer />
+          <ViewWithMargin style={{ flexDirection: "row", gap: 20 }}>
+            <SmallWhiteText>
+              {" "}
+              Released Year:{" "}
+              <Text style={{ color: Colors.main }}>{details?.year}</Text>
+            </SmallWhiteText>
+            <SmallWhiteText>
+              {" "}
+              IMDB Rating:{" "}
+              <Text style={{ color: Colors.main }}>{details?.rating}</Text>
+            </SmallWhiteText>
+            <SmallWhiteText>
+              {" "}
+              Lang:{" "}
+              <Text style={{ color: Colors.main }}>{details?.language}</Text>
+            </SmallWhiteText>
+          </ViewWithMargin>
           <View
             style={{
               width: SCREEN_WIDTH - SCREEN_WIDTH * 0.1,
@@ -291,18 +350,29 @@ export default function Details() {
               }}
             >
               {movieDetails?.cast?.map((cast) => (
-                <TouchableOpacity>
-                  <View style={{ flex: 1, marginRight: 40 }}>
-                    <Image
-                      placeholder={blurhash}
-                      style={{ width: 70, height: 70, borderRadius: 35 }}
-                      source={cast?.url_small_image}
-                    />
-                    <SmallWhiteText style={{ marginTop: 10 }}>
-                      {cast?.name}
-                    </SmallWhiteText>
-                  </View>
-                </TouchableOpacity>
+                <Link
+                  asChild
+                  href={{
+                    pathname: "actor",
+                    params: {
+                      imdb_code: cast.imdb_code,
+                      name: cast.character_name,
+                    },
+                  }}
+                >
+                  <TouchableOpacity>
+                    <View style={{ flex: 1, marginRight: 40 }}>
+                      <Image
+                        placeholder={blurhash}
+                        style={{ width: 70, height: 70, borderRadius: 35 }}
+                        source={cast?.url_small_image}
+                      />
+                      <SmallWhiteText style={{ marginTop: 10 }}>
+                        {cast?.name}
+                      </SmallWhiteText>
+                    </View>
+                  </TouchableOpacity>
+                </Link>
               ))}
             </ScrollView>
             <View>

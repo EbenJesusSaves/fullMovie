@@ -65,6 +65,15 @@ function RootLayoutNav() {
             animation: "fade_from_bottom",
           }}
         />
+        <Stack.Screen
+          name="actor"
+          options={{
+            headerShown: false,
+            title: params.name as string,
+            presentation: "modal",
+            animation: "slide_from_left",
+          }}
+        />
       </Stack>
     </ThemeProvider>
   );
