@@ -240,7 +240,7 @@ export default function Details() {
             fontWeight: "600",
           }}
         >
-          {details.title_english}
+          {details?.title_english}
         </Text>
 
         <View

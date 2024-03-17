@@ -1,13 +1,38 @@
 import { View, Text } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SmallWhiteText } from "../components/UI/UtilStyles";
 import { useLocalSearchParams } from "expo-router";
+import { baseAPI } from "../apis/axios/config";
+import { Skeleton } from "@rneui/themed";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@gorhom/bottom-sheet";
+import { Image } from "expo-image";
 
 export default function Actor() {
   const params = useLocalSearchParams();
-  console.log(params);
+  const [actorDetails, setActorDetails] = useState();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      try {
+        const { data } = await baseAPI.get(`/person/${params.imdb_code}`);
+
+        setLoading(false);
+      } catch (error) {}
+    })();
+  }, [params.imdb_code]);
+
   return (
-    <View>
+    <View style={{ flex: 1, alignItems: "center" }}>
+      <Skeleton
+        width={SCREEN_WIDTH - 20}
+        animation="pulse"
+        height={SCREEN_HEIGHT / 3}
+      />
+      <Image
+        source={`https://image.tmdb.org/t/p/w500${actorDetails?.profile_path}`}
+      />
       <SmallWhiteText>{params.imdb_code}</SmallWhiteText>
     </View>
   );
