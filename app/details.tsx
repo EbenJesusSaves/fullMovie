@@ -13,6 +13,8 @@ import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
 import Animated from "react-native-reanimated";
 import { Image } from "expo-image";
+import * as Sharing from "expo-sharing";
+import * as Linking from "expo-linking";
 import {
   CenteredView,
   SmallSpicer,
@@ -121,7 +123,7 @@ export default function Details() {
     large_screenshot_image2: "",
     large_screenshot_image3: "",
     like_count: 0,
-    medium_cover_image: "",
+    medium_cover_image: params?.medium_cover_image as string,
     medium_screenshot_image1: "",
     medium_screenshot_image2: "",
     medium_screenshot_image3: "",
@@ -144,6 +146,17 @@ export default function Details() {
   const onStateChange = useCallback((state: any) => {
     setVidState(state);
   }, []);
+
+  //---------------------------linking--------------------------//
+  const shareLink = async () => {
+    try {
+      const url = Linking.createURL("details"); // replace with your path
+      await Sharing.shareAsync(url);
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -266,14 +279,16 @@ export default function Details() {
 
             <SmallWhiteText style={{ marginTop: 8 }}>Watch Now</SmallWhiteText>
           </CenteredView>
-          <CenteredView>
-            <MaterialCommunityIcons
-              name="folder-star-multiple"
-              size={24}
-              color={Colors.main}
-            />
-            <SmallWhiteText style={{ marginTop: 8 }}>Reviews</SmallWhiteText>
-          </CenteredView>
+          <TouchableOpacity onPress={shareLink}>
+            <CenteredView>
+              <MaterialCommunityIcons
+                name="folder-star-multiple"
+                size={24}
+                color={Colors.main}
+              />
+              <SmallWhiteText style={{ marginTop: 8 }}>Reviews</SmallWhiteText>
+            </CenteredView>
+          </TouchableOpacity>
         </View>
         <SmallSpicer />
 
