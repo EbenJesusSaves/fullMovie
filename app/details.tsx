@@ -5,6 +5,7 @@ import {
   Pressable,
   TouchableOpacity,
   Button,
+  Platform,
 } from "react-native";
 import { Link, Stack, useLocalSearchParams, useRouter } from "expo-router";
 import YoutubePlayer from "react-native-youtube-iframe";
@@ -15,6 +16,7 @@ import Animated from "react-native-reanimated";
 import { Image } from "expo-image";
 import * as Sharing from "expo-sharing";
 import * as Linking from "expo-linking";
+import * as Permissions from "expo-permissions";
 import {
   CenteredView,
   SmallSpicer,
@@ -147,11 +149,21 @@ export default function Details() {
     setVidState(state);
   }, []);
 
+  const requestPermissions = async () => {
+    const { status } = await Permissions.askAsync(
+      Permissions.READ_EXTERNAL_STORAGE
+    );
+    if (status !== "granted") {
+      alert("Sorry, we need file access permissions to make this work!");
+    }
+  };
+
   //---------------------------linking--------------------------//
   const shareLink = async () => {
+    requestPermissions();
     try {
       const url = Linking.createURL("details"); // replace with your path
-      await Sharing.shareAsync(url);
+      await Sharing.shareAsync("king");
     } catch (error) {
       console.error(error.message);
     }
@@ -206,32 +218,33 @@ export default function Details() {
           style={{ width: SCREEN_WIDTH, height: SCREEN_HEIGHT / 1.5 }}
         />
       )}
-
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          position: vidState !== "playing" ? "absolute" : "relative",
-          top: 0,
-          zIndex: vidState !== "playing" ? -1 : 0,
-          opacity: vidState !== "playing" ? 0 : 1,
-          right: 330,
-        }}
-      >
-        <YoutubePlayer
-          initialPlayerParams={{
-            color: "white",
-            loop: true,
-            controls: false,
+      {Platform.OS !== "android" && (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            position: vidState !== "playing" ? "absolute" : "relative",
+            top: 0,
+            zIndex: vidState !== "playing" ? -1 : 0,
+            opacity: vidState !== "playing" ? 0 : 1,
+            right: 330,
           }}
-          onChangeState={onStateChange}
-          height={540}
-          play={true}
-          mute
-          width={1000}
-          videoId={movieDetails?.yt_trailer_code}
-        />
-      </View>
+        >
+          <YoutubePlayer
+            initialPlayerParams={{
+              color: "white",
+              loop: true,
+              controls: false,
+            }}
+            onChangeState={onStateChange}
+            height={540}
+            play={true}
+            mute
+            width={1000}
+            videoId={movieDetails?.yt_trailer_code}
+          />
+        </View>
+      )}
 
       <LinearGradient
         // Background Linear Gradient
