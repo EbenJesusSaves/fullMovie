@@ -27,6 +27,8 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { yifyApi } from "../apis/axios/config";
+import Popover from "react-native-popover-view/dist/Popover";
+import { Placement } from "react-native-popover-view/dist/Types";
 
 export interface Movie {
   background_image: string;
@@ -184,7 +186,7 @@ export default function Details() {
       } catch (error) {
         console.log(error);
       }
-
+      console.log(movieDetails);
       //--------------similar movies like the above -------------------------//
       try {
         const {
@@ -419,6 +421,125 @@ export default function Details() {
                 onPress={togglePlaying}
               />
             </View>
+            <View>
+              {/* <View
+                style={{ backgroundColor: Colors.medium_gray, height: 0.1 }}
+              ></View> */}
+              <SmallWhiteText
+                style={{
+                  fontSize: 13,
+                  marginTop: 35,
+                  marginBottom: 15,
+                  color: Colors.main,
+                }}
+              >
+                Downloads for Android
+              </SmallWhiteText>
+              <Popover
+                placement={"floating" as Placement}
+                from={
+                  <TouchableOpacity>
+                    <SmallWhiteText>Press here to open popover!</SmallWhiteText>
+                  </TouchableOpacity>
+                }
+              >
+                <CenteredView style={{ backgroundColor: Colors.primary }}>
+                  <View
+                    style={{
+                      width: SCREEN_WIDTH - 90,
+                      backgroundColor: Colors.main,
+                      height: SCREEN_HEIGHT / 9,
+                      padding: 10,
+                    }}
+                  >
+                    <MaterialCommunityIcons
+                      name="content-save-check"
+                      size={30}
+                      color="black"
+                    />
+                    <Text style={{ fontWeight: "500", fontSize: 17 }}>
+                      Download / Save Movie
+                    </Text>
+                  </View>
+
+                  <TouchableOpacity
+                    onPress={() => {}}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+
+                      marginBottom: 10,
+                    }}
+                  >
+                    <SmallWhiteText
+                      style={{
+                        marginTop: 15,
+                        borderColor: Colors.main,
+                        borderWidth: 0.8,
+                        backgroundColor: "rgba(208, 255, 73, 0.2)",
+                        fontSize: 14,
+                        paddingVertical: 10,
+                        paddingHorizontal: SCREEN_WIDTH / 5,
+                        borderRadius: 10,
+                        overflow: "hidden",
+                      }}
+                    >
+                      Add to Watch List
+                    </SmallWhiteText>
+                  </TouchableOpacity>
+                  <View
+                    style={{
+                      borderWidth: 0.7,
+                      width: SCREEN_WIDTH / 1.45,
+                      borderColor: Colors.dark_gray,
+                      borderRadius: 4,
+                      marginBottom: 10,
+                      paddingTop: 10,
+                      paddingLeft: 8,
+                    }}
+                  >
+                    {movieDetails?.torrents?.map((m) => (
+                      <TouchableOpacity
+                        onPress={() => {}}
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          position: "relative",
+                          marginRight: 10,
+                          marginBottom: 20,
+                        }}
+                      >
+                        <SmallWhiteText>
+                          Size:{" "}
+                          <SmallWhiteText style={{ color: Colors.main }}>
+                            {m.size}
+                          </SmallWhiteText>{" "}
+                          Quality:{" "}
+                          <SmallWhiteText style={{ color: Colors.main }}>
+                            {m.quality}
+                          </SmallWhiteText>{" "}
+                        </SmallWhiteText>
+                        <SmallWhiteText
+                          style={{
+                            backgroundColor: Colors.main,
+                            color: "black",
+                            padding: 5,
+                            borderRadius: 10,
+                            overflow: "hidden",
+                          }}
+                        >
+                          Download
+                        </SmallWhiteText>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                </CenteredView>
+              </Popover>
+            </View>
+
             <SmallWhiteText
               style={{ fontSize: 13, marginTop: 35, marginBottom: 15 }}
             >
