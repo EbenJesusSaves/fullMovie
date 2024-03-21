@@ -24,7 +24,6 @@ export const GreetingsComponent = () => {
   const [trending, setTrending] = useState<ApiRes>();
   useEffect(() => {
     (async () => {
-      console.log("hi");
       try {
         const { data } = await baseAPI.get<ApiRes>(
           "movie/upcoming?include_adult=true&include_video=true&language=en-US&page=1"
@@ -36,7 +35,6 @@ export const GreetingsComponent = () => {
       }
     })();
   }, []);
-  console.log(trending);
 
   return (
     <View style={{ flex: 1 }}>

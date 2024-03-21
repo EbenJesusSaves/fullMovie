@@ -73,7 +73,7 @@ export const MoviesList = () => {
   }, []);
   const fetchData = async () => {
     page.current++;
-    console.log(page.current);
+
     if (page.current === 1) return;
 
     try {
