@@ -151,25 +151,25 @@ export default function Details() {
     setVidState(state);
   }, []);
 
-  const requestPermissions = async () => {
-    const { status } = await Permissions.askAsync(
-      Permissions.READ_EXTERNAL_STORAGE
-    );
-    if (status !== "granted") {
-      alert("Sorry, we need file access permissions to make this work!");
-    }
-  };
+  // const requestPermissions = async () => {
+  //   const { status } = await Permissions.askAsync(
+  //     Permissions.READ_EXTERNAL_STORAGE
+  //   );
+  //   if (status !== "granted") {
+  //     alert("Sorry, we need file access permissions to make this work!");
+  //   }
+  // };
 
   //---------------------------linking--------------------------//
-  const shareLink = async () => {
-    requestPermissions();
-    try {
-      const url = Linking.createURL("details"); // replace with your path
-      await Sharing.shareAsync("king");
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
+  // const shareLink = async () => {
+  //   requestPermissions();
+  //   try {
+  //     const url = Linking.createURL("details"); // replace with your path
+  //     await Sharing.shareAsync("king");
+  //   } catch (error) {
+  //     console.error(error.message);
+  //   }
+  // };
 
   useEffect(() => {
     (async () => {
@@ -294,7 +294,9 @@ export default function Details() {
 
             <SmallWhiteText style={{ marginTop: 8 }}>Watch Now</SmallWhiteText>
           </CenteredView>
-          <TouchableOpacity onPress={shareLink}>
+          <TouchableOpacity
+          // onPress={shareLink}
+          >
             <CenteredView>
               <MaterialCommunityIcons
                 name="folder-star-multiple"
