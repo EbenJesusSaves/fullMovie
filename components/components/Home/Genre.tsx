@@ -3,8 +3,7 @@ import { ScrollView, Text, TouchableOpacity } from "react-native";
 import styled from "styled-components";
 import { Colors, SCREEN_HEIGHT } from "../../UI";
 
-export const Genre = () => {
-  const [activeGenre, setActiveGenre] = useState<string>("Action");
+export const Genre = ({ activeGenre, setActiveGenre }: any) => {
   const genres = [
     { name: "Action", emoji: "💥" },
     { name: "Adventure", emoji: "🌄" },

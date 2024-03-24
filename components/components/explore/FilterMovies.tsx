@@ -1,77 +1,35 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { Dimensions, Text, TouchableOpacity, View } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Genre } from "../Home/Genre";
 import { yifyApi } from "../../../apis/axios/config";
-import { MasonryFlashList } from "@shopify/flash-list";
-import { Card } from "../../UI/Card";
-import { SCREEN_HEIGHT } from "../../UI";
-import { GreetingsComponent } from "./GreetingsComponent";
-import { Genre } from "./Genre";
-import BottomSheet, {
-  BottomSheetModal,
-  BottomSheetView,
-} from "@gorhom/bottom-sheet";
-import LottieView from "lottie-react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Link } from "expo-router";
-//listEmpty Comp
-//list footer component
+import { Card } from "../../UI/Card";
+import LottieView from "lottie-react-native";
+import { SCREEN_HEIGHT } from "../../UI";
+import { MasonryFlashList } from "@shopify/flash-list";
 
-interface Movie {
-  background_image: string;
-  background_image_original: string;
-  date_uploaded: string;
-  date_uploaded_unix: number;
-  description_full: string;
-  genres: string[];
-  id: number;
-  imdb_code: string;
-  language: string;
-  large_cover_image: string;
-  medium_cover_image: string;
-  mpa_rating: string;
-  rating: number;
-  runtime: number;
-  slug: string;
-  small_cover_image: string;
-  state: string;
-  summary: string;
-  synopsis: string;
-  title: string;
-  title_english: string;
-  title_long: string;
-  torrents: Torrent[];
-  url: string;
-  year: number;
-  yt_trailer_code: string;
-}
-
-interface Torrent {
-  url: string;
-}
-export const MoviesList = () => {
-  const [movies, setMovies] = useState<any>([]);
+export default function FilterMovies() {
   const [activeGenre, setActiveGenre] = useState<string>("Action");
+  const [loading, setLoading] = useState<Boolean>(false);
+  const [movies, setMovies] = useState<any>([]);
+
   let page = useRef(1);
 
   useEffect(() => {
     (async () => {
+      setLoading(true);
       try {
         const {
           data: { data },
-        } = await yifyApi.get("list_movies.json");
+        } = await yifyApi.get(`list_movies.json?genre=$${activeGenre}`);
 
         setMovies(data?.movies);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
     })();
-  }, []);
+  }, [activeGenre]);
   const fetchData = async () => {
     page.current++;
 
@@ -80,15 +38,18 @@ export const MoviesList = () => {
     try {
       const {
         data: { data },
-      } = await yifyApi.get(`list_movies.json?page=${page.current}`);
+      } = await yifyApi.get(
+        `list_movies.json?page=${page.current}&genre=${activeGenre}`
+      );
 
       setMovies((prev: any) => [...prev, ...data?.movies]);
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
-    <View style={{ flex: 1 }}>
+    <View>
       <MasonryFlashList
         data={movies}
         numColumns={2}
@@ -96,7 +57,6 @@ export const MoviesList = () => {
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
-            <GreetingsComponent />
             <Genre activeGenre={activeGenre} setActiveGenre={setActiveGenre} />
           </View>
         }
@@ -104,6 +64,7 @@ export const MoviesList = () => {
         showsVerticalScrollIndicator={false}
         onEndReachedThreshold={0.8}
         estimatedItemSize={200}
+        refreshing={loading as boolean}
         onEndReached={fetchData}
         ListFooterComponent={
           <View
@@ -159,4 +120,4 @@ export const MoviesList = () => {
       />
     </View>
   );
-};
+}
