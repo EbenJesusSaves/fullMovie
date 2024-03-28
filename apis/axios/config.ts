@@ -14,3 +14,7 @@ export const staticImageLink = "https://image.tmdb.org/t/p/";
 export const yifyApi = axios.create({
   baseURL: "https://yts.mx/api/v2/",
 });
+
+export const backendAPI = axios.create({
+  baseURL: "https://fullmoviebackend.onrender.com/",
+});

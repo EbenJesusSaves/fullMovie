@@ -1,18 +1,50 @@
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@gorhom/bottom-sheet";
-import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CenteredView, SmallWhiteText } from "../../components/UI/UtilStyles";
+import {
+  CenteredView,
+  SmallSpicer,
+  SmallWhiteText,
+  ViewWithMargin,
+} from "../../components/UI/UtilStyles";
 import { Image } from "expo-image";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { Foundation } from "@expo/vector-icons";
 import styled from "styled-components";
+import { yifyApi } from "../../apis/axios/config";
+import { Link } from "expo-router";
+import { Card } from "../../components/UI/Card";
+import { Colors } from "../../components/UI";
+import { MaterialIcons } from "@expo/vector-icons";
 const Tab = () => {
+  const [favorites, setFavorites] = useState();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const {
+          data: { data },
+        } = await yifyApi.get("list_movies.json");
+
+        setFavorites(data?.movies);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <CenteredView>
+      <View
+        style={{
+          display: "flex",
+
+          alignItems: "center",
+        }}
+      >
         <SmallWhiteText
           style={{ fontSize: 15, fontWeight: "500", marginBottom: 10 }}
         >
@@ -44,10 +76,10 @@ const Tab = () => {
             />
             <View>
               <Text style={{ fontSize: 17, fontWeight: "600" }}>
-                Owusu Benedicta
+                Owusu FishCat
               </Text>
               <Text style={{ fontSize: 12, color: "grey" }}>
-                bestFriends@gmail.com
+                checkoutthespideman@gmail.com
               </Text>
               <TouchableOpacity
                 style={{
@@ -110,7 +142,132 @@ const Tab = () => {
             </TouchableOpacity>
           </View>
         </View>
-      </CenteredView>
+      </View>
+      <ViewWithMargin style={{ marginTop: 20 }}>
+        <TouchableOpacity
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingRight: 15,
+          }}
+        >
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 10,
+            }}
+          >
+            <AntDesign name="setting" size={24} color="white" />
+            <SmallWhiteText style={{ fontSize: 15 }}>Settings</SmallWhiteText>
+          </View>
+          <MaterialIcons name="arrow-right" size={24} color="white" />
+        </TouchableOpacity>
+        <SmallSpicer />
+        <TouchableOpacity
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingRight: 15,
+          }}
+        >
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 10,
+            }}
+          >
+            <MaterialCommunityIcons
+              name="heart-settings-outline"
+              size={24}
+              color="white"
+            />
+            <SmallWhiteText style={{ fontSize: 15 }}>
+              Favorite List
+            </SmallWhiteText>
+          </View>
+          <MaterialIcons name="arrow-right" size={24} color="white" />
+        </TouchableOpacity>
+        <SmallSpicer />
+        <TouchableOpacity
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingRight: 15,
+          }}
+        >
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 10,
+            }}
+          >
+            <MaterialCommunityIcons
+              name="logout-variant"
+              size={24}
+              color="white"
+            />
+            <SmallWhiteText style={{ fontSize: 15 }}>Log out</SmallWhiteText>
+          </View>
+          <MaterialIcons name="arrow-right" size={24} color="white" />
+        </TouchableOpacity>
+      </ViewWithMargin>
+      <ViewWithMargin style={{ marginVertical: 20 }}>
+        <SmallWhiteText
+          style={{
+            fontSize: 15,
+            fontWeight: "500",
+            marginBottom: 10,
+            color: Colors.main,
+          }}
+        >
+          Recent Viewed movies{" "}
+        </SmallWhiteText>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {favorites?.map((item) => {
+            return (
+              <Link
+                style={{ color: "white" }}
+                asChild
+                href={{
+                  pathname: "details",
+                  params: {
+                    imdb_id: item.imdb_code,
+                    id: item.id,
+                    summary: item.summary,
+                    medium_cover_image: item.medium_cover_image,
+                    title_english: item.title_english,
+                    background_image: item.background_image,
+                  },
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    alignItems: "center",
+                    marginRight: 30,
+                  }}
+                >
+                  <Card item={item} dynamicHeight={250} />
+                </TouchableOpacity>
+              </Link>
+            );
+          })}
+        </ScrollView>
+      </ViewWithMargin>
+      <ViewWithMargin style={{ marginTop: 20 }}>
+        <SmallWhiteText>Favorites </SmallWhiteText>
+      </ViewWithMargin>
     </SafeAreaView>
   );
 };
