@@ -14,7 +14,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { Foundation } from "@expo/vector-icons";
 import styled from "styled-components";
-import { yifyApi } from "../../apis/axios/config";
+import { backendAPI, yifyApi } from "../../apis/axios/config";
 import { Link } from "expo-router";
 import { Card } from "../../components/UI/Card";
 import { Colors } from "../../components/UI";
@@ -35,6 +35,20 @@ const Tab = () => {
       }
     })();
   }, []);
+
+  //-------------------- user login --------------------//
+  const login = async () => {
+    try {
+      console.log("hi");
+      const { data } = await backendAPI.post("/signIn", {
+        username: "Ellsa",
+        password: "password",
+      });
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -82,6 +96,7 @@ const Tab = () => {
                 checkoutthespideman@gmail.com
               </Text>
               <TouchableOpacity
+                onPress={login}
                 style={{
                   display: "flex",
                   flexDirection: "row",

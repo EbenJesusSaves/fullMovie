@@ -188,7 +188,7 @@ export default function Details() {
       } catch (error) {
         console.log(error);
       }
-      console.log(movieDetails);
+
       //--------------similar movies like the above -------------------------//
       try {
         const {

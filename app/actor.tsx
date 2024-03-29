@@ -23,7 +23,7 @@ export default function Actor() {
       aspect: [4, 3],
       quality: 1,
     });
-    console.log(result);
+
     if (!result.canceled) {
       setImageUri(result.assets[0].uri);
       saveImage(result.assets[0]);
