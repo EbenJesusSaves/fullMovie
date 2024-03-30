@@ -5,9 +5,9 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { Redirect, Stack, useLocalSearchParams, useRouter } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { baseAPI } from "../apis/axios/config";
@@ -51,6 +51,9 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
   const router = useRouter();
   const params = useLocalSearchParams();
+  const user = false;
+
+  if (!user) return <Redirect href="/sign-in" />;
 
   return (
     <ThemeProvider value={DarkTheme}>
