@@ -9,25 +9,30 @@ import { backendAPI } from "../apis/axios/config";
 import { Colors } from "../components/UI";
 import { TouchableOpacity } from "react-native";
 import { ActivityIndicator } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { User, loginUser } from "../redux/reducers/userReducer";
+import { RootState } from "../redux/store/store";
 
 export default function SignIn() {
   const [user, setUser] = useState<boolean>();
   const [username, setUsername] = useState<string>();
   const [password, setUPassword] = useState<string>();
   const [loader, setLoader] = useState<boolean>(false);
-  const [info, setInfo] = useState();
+  const [info, setInfo] = useState<User>();
   const [errorText, setErrorText] = useState("");
 
+  const userprofile = useSelector((state: RootState) => state.user);
+
   const submit = async () => {
-    console.log("hii");
     try {
       setLoader(true);
-      const { data } = await backendAPI.post("signIn", {
+      const { data } = await backendAPI.post<User>("signIn", {
         username,
         password,
       });
       setUser(true);
       setInfo(data);
+      dispatch(loginUser({ userData: data, isLogin: true }));
       setLoader(false);
     } catch (error) {
       console.log(error);
@@ -36,8 +41,9 @@ export default function SignIn() {
     }
   };
 
-  console.log(info);
-  if (user) return <Redirect href="/" />;
+  const dispatch = useDispatch();
+
+  if (userprofile.isLogin) return <Redirect href="/" />;
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <SafeAreaView style={{ flex: 1, width: SCREEN_WIDTH - 40 }}>

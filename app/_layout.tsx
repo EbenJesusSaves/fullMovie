@@ -13,6 +13,8 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { baseAPI } from "../apis/axios/config";
 import { PaperProvider } from "react-native-paper";
 import { theme } from "../components/UI/reactNativePaperTheme";
+import { Provider } from "react-redux";
+import store from "../redux/store/store";
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -43,9 +45,11 @@ export default function AppLayout() {
 
   return (
     <SafeAreaProvider>
-      <PaperProvider theme={theme}>
-        <RootLayoutNav />
-      </PaperProvider>
+      <Provider store={store}>
+        <PaperProvider theme={theme}>
+          <RootLayoutNav />
+        </PaperProvider>
+      </Provider>
     </SafeAreaProvider>
   );
 }
