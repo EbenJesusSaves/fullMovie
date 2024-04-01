@@ -11,7 +11,8 @@ import { useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { baseAPI } from "../apis/axios/config";
-
+import { PaperProvider } from "react-native-paper";
+import { theme } from "../components/UI/reactNativePaperTheme";
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -42,7 +43,9 @@ export default function AppLayout() {
 
   return (
     <SafeAreaProvider>
-      <RootLayoutNav />
+      <PaperProvider theme={theme}>
+        <RootLayoutNav />
+      </PaperProvider>
     </SafeAreaProvider>
   );
 }
@@ -51,9 +54,6 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
   const router = useRouter();
   const params = useLocalSearchParams();
-  const user = false;
-
-  if (!user) return <Redirect href="/sign-in" />;
 
   return (
     <ThemeProvider value={DarkTheme}>
@@ -70,6 +70,15 @@ function RootLayoutNav() {
         />
         <Stack.Screen
           name="actor"
+          options={{
+            headerShown: false,
+            title: params.name as string,
+            presentation: "modal",
+            animation: "slide_from_left",
+          }}
+        />
+        <Stack.Screen
+          name="sign-in"
           options={{
             headerShown: false,
             title: params.name as string,
