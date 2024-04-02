@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { UserSlice } from "../../components/types/types";
 
 const userSlice = createSlice({
   name: "userprofile",
@@ -16,15 +17,3 @@ const userSlice = createSlice({
 
 export const { loginUser } = userSlice.actions;
 export default userSlice.reducer;
-
-export interface User {
-  username: string;
-  email: string;
-  profile: string;
-  token: string;
-}
-
-interface UserSlice {
-  isLogin: boolean;
-  userData: User;
-}

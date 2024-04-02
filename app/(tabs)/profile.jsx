@@ -19,9 +19,12 @@ import { Link } from "expo-router";
 import { Card } from "../../components/UI/Card";
 import { Colors } from "../../components/UI";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store/store";
 const Tab = () => {
   const [favorites, setFavorites] = useState();
-
+  const userprofile = useSelector((state: RootState) => state.user);
+  console.log(userprofile);
   useEffect(() => {
     (async () => {
       try {
@@ -90,10 +93,10 @@ const Tab = () => {
             />
             <View>
               <Text style={{ fontSize: 17, fontWeight: "600" }}>
-                Owusu FishCat
+                {userprofile.userData.data?.username}
               </Text>
               <Text style={{ fontSize: 12, color: "grey" }}>
-                checkoutthespideman@gmail.com
+                {userprofile.userData.data?.email}
               </Text>
               <TouchableOpacity
                 onPress={login}

@@ -18,3 +18,21 @@ export const yifyApi = axios.create({
 export const backendAPI = axios.create({
   baseURL: "https://fullmoviebackend.onrender.com/",
 });
+
+import store from "../../redux/store/store";
+
+const { user } = store.getState();
+
+if (user.isLogin) {
+  backendAPI.interceptors.request.use(
+    (config) => {
+      if (user.userData.token) {
+        config.headers.Authorization = `Bearer ${user.userData.token}`;
+      }
+      return config;
+    },
+    (error) => {
+      Promise.reject(error);
+    }
+  );
+}

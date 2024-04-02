@@ -10,8 +10,9 @@ import { Colors } from "../components/UI";
 import { TouchableOpacity } from "react-native";
 import { ActivityIndicator } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { User, loginUser } from "../redux/reducers/userReducer";
+import { loginUser } from "../redux/reducers/userReducer";
 import { RootState } from "../redux/store/store";
+import { User } from "../components/types/types";
 
 export default function SignIn() {
   const [user, setUser] = useState<boolean>();
