@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "../reducers/userReducer";
-import { UserSlice } from "../../components/types/types";
+import { UserSlice, UserSliceForSelector } from "../../components/types/types";
 
 const store = configureStore({
   reducer: {
@@ -10,5 +10,8 @@ const store = configureStore({
 
 export interface RootState {
   user: UserSlice;
+}
+export interface RootStateForSelectors {
+  user: UserSliceForSelector;
 }
 export default store;

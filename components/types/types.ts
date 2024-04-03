@@ -9,3 +9,9 @@ export interface UserSlice {
   isLogin: boolean;
   userData: User;
 }
+interface Data {
+  data: User;
+}
+export interface UserSliceForSelector {
+  userData: Data;
+}

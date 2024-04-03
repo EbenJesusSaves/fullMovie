@@ -20,11 +20,11 @@ import { Card } from "../../components/UI/Card";
 import { Colors } from "../../components/UI";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store/store";
+import { RootState, RootStateForSelectors } from "../../redux/store/store";
 const Tab = () => {
-  const [favorites, setFavorites] = useState();
-  const userprofile = useSelector((state: RootState) => state.user);
-  console.log(userprofile);
+  const [favorites, setFavorites] = useState([]);
+  const userprofile = useSelector((state: RootStateForSelectors) => state.user);
+
   useEffect(() => {
     (async () => {
       try {
@@ -47,7 +47,6 @@ const Tab = () => {
         username: "Ellsa",
         password: "password",
       });
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -86,9 +85,7 @@ const Tab = () => {
             }}
           >
             <Image
-              height={60}
-              style={{ borderRadius: 30 }}
-              width={60}
+              style={{ borderRadius: 30, height: 60, width: 60 }}
               source="https://i.pinimg.com/736x/63/7c/4e/637c4ecc4450f5fef34bdce02b361223.jpg"
             />
             <View>
@@ -98,20 +95,32 @@ const Tab = () => {
               <Text style={{ fontSize: 12, color: "grey" }}>
                 {userprofile.userData.data?.email}
               </Text>
-              <TouchableOpacity
-                onPress={login}
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-
-                  marginTop: 5,
-                  gap: 4,
+              <Link
+                asChild
+                href={{
+                  pathname: "editProfile",
+                  params: {
+                    username: userprofile.userData.data?.username,
+                    email: userprofile.userData.data?.email,
+                    uri: userprofile.userData.data?.profile,
+                  },
                 }}
               >
-                <Text style={{}}>Edit Profile</Text>
-                <AntDesign name="right" size={12} color="black" />
-              </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={login}
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+
+                    marginTop: 5,
+                    gap: 4,
+                  }}
+                >
+                  <Text style={{}}>Edit Profile</Text>
+                  <AntDesign name="right" size={12} color="black" />
+                </TouchableOpacity>
+              </Link>
             </View>
           </View>
           <View
@@ -253,7 +262,7 @@ const Tab = () => {
           Recent Viewed movies{" "}
         </SmallWhiteText>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {favorites?.map((item) => {
+          {favorites?.map((item: any) => {
             return (
               <Link
                 style={{ color: "white" }}
