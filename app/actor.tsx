@@ -16,6 +16,7 @@ export default function Actor() {
   const [imageUri, setImageUri] = useState(null);
   const [fileName, setFileName] = useState();
   const [images, setImage] = useState();
+
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -79,7 +80,7 @@ export default function Actor() {
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         {imageUri && (
           <Image
-            source={{ uri: images }}
+            source={{ uri: imageUri }}
             style={{ width: SCREEN_WIDTH, height: 200 }}
           />
         )}

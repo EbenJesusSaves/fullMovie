@@ -4,12 +4,13 @@ import { SmallSpicer, SmallWhiteText } from "../components/UI/UtilStyles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
-import { TextInput } from "react-native-paper";
+import { Button, TextInput } from "react-native-paper";
 import { useLocalSearchParams } from "expo-router";
 import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import { Entypo } from "@expo/vector-icons";
+import { backendAPI } from "../apis/axios/config";
 const editProfile = () => {
   const params = useLocalSearchParams();
   const [email, setEmail] = useState(params.email);
@@ -36,7 +37,7 @@ const editProfile = () => {
   };
 
   const saveImage = async (asset) => {
-    const { uri, filename } = await asset;
+    const { uri, filename } = asset;
     setFileName(filename);
     console.log(fileName);
     const destination = `${FileSystem.documentDirectory}${filename}`;
@@ -54,7 +55,7 @@ const editProfile = () => {
 
   const getSavedImage = async (filename) => {
     const uri = `${FileSystem.documentDirectory}${filename}`;
-
+    console.log(fileName);
     try {
       const fileInfo = await FileSystem.getInfoAsync(uri);
       if (fileInfo.exists) {
@@ -68,7 +69,22 @@ const editProfile = () => {
       console.error("Error getting image:", error);
     }
   };
-  getSavedImage(fileName);
+
+  //--------------------------update user details -----------------------------//
+  const updateUserProfile = async () => {
+    console.log("updated");
+    try {
+      const { data } = await backendAPI.put(`api/updateUserProfile/`, {
+        username,
+        email,
+        profile: fileName,
+        id: 19,
+      });
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -133,6 +149,9 @@ const editProfile = () => {
           </SmallWhiteText>
         </TouchableOpacity>
         <SmallSpicer />
+        <Button onPress={updateUserProfile}>
+          <Text>Update</Text>
+        </Button>
         <TouchableOpacity
           style={{
             backgroundColor: Colors.main,
