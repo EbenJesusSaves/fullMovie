@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Button,
   Platform,
+  Linking,
 } from "react-native";
 import { Link, Stack, useLocalSearchParams, useRouter } from "expo-router";
 import YoutubePlayer from "react-native-youtube-iframe";
@@ -15,7 +16,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Animated from "react-native-reanimated";
 import { Image } from "expo-image";
 import * as Sharing from "expo-sharing";
-import * as Linking from "expo-linking";
+
 import * as Permissions from "expo-permissions";
 import {
   CenteredView,
@@ -29,6 +30,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { yifyApi } from "../apis/axios/config";
 import Popover from "react-native-popover-view/dist/Popover";
 import { Placement } from "react-native-popover-view/dist/Types";
+import { isIOS } from "@rneui/base";
 
 export interface Movie {
   background_image: string;
@@ -186,7 +188,7 @@ export default function Details() {
       } catch (error) {
         console.log(error);
       }
-      console.log(movieDetails);
+
       //--------------similar movies like the above -------------------------//
       try {
         const {
@@ -206,7 +208,6 @@ export default function Details() {
     setPlaying((prev) => !prev);
   }, []);
 
-  // console.log(similarMovies, loading, movieDetails);
   return (
     <ScrollView
       ref={scrollViewRef}
@@ -503,7 +504,10 @@ export default function Details() {
                   >
                     {movieDetails?.torrents?.map((m) => (
                       <TouchableOpacity
-                        onPress={() => {}}
+                        onPress={() => {
+                          console.log(movie);
+                          Linking.openURL(isIOS ? details?.url : m?.url);
+                        }}
                         style={{
                           display: "flex",
                           flexDirection: "row",
@@ -533,7 +537,7 @@ export default function Details() {
                             overflow: "hidden",
                           }}
                         >
-                          Download
+                          {isIOS ? "Watch Now" : "Download"}
                         </SmallWhiteText>
                       </TouchableOpacity>
                     ))}

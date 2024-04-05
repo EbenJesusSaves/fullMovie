@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import CustomBottomTab from "../../components/BottomTabs/CustomBottomTab";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store/store";
 
 export default function TabLayout() {
+  const userprofile = useSelector((state: RootState) => state.user);
+
+  if (!userprofile.isLogin) return <Redirect href="/sign-in" />;
+
   return (
     <Tabs
       screenOptions={{ headerShown: false }}

@@ -14,3 +14,25 @@ export const staticImageLink = "https://image.tmdb.org/t/p/";
 export const yifyApi = axios.create({
   baseURL: "https://yts.mx/api/v2/",
 });
+
+export const backendAPI = axios.create({
+  baseURL: "https://fullmoviebackend.onrender.com/",
+});
+
+import store from "../../redux/store/store";
+
+const { user } = store.getState();
+
+if (user.isLogin) {
+  backendAPI.interceptors.request.use(
+    (config) => {
+      if (user.userData.token) {
+        config.headers.Authorization = `Bearer ${user.userData.token}`;
+      }
+      return config;
+    },
+    (error) => {
+      Promise.reject(error);
+    }
+  );
+}
