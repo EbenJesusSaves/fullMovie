@@ -24,7 +24,7 @@ import { RootState, RootStateForSelectors } from "../../redux/store/store";
 const Tab = () => {
   const [favorites, setFavorites] = useState([]);
   const userprofile = useSelector((state: RootStateForSelectors) => state.user);
-
+  console.log(userprofile);
   useEffect(() => {
     (async () => {
       try {
@@ -40,17 +40,17 @@ const Tab = () => {
   }, []);
 
   //-------------------- user login --------------------//
-  const login = async () => {
-    try {
-      console.log("hi");
-      const { data } = await backendAPI.post("/signIn", {
-        username: "Ellsa",
-        password: "password",
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const login = async () => {
+  //   try {
+  //     console.log("hi");
+  //     const { data } = await backendAPI.post("/signIn", {
+  //       username: "Ellsa",
+  //       password: "password",
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -107,7 +107,7 @@ const Tab = () => {
                 }}
               >
                 <TouchableOpacity
-                  onPress={login}
+                  // onPress={login}
                   style={{
                     display: "flex",
                     flexDirection: "row",
