@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Movie } from "../../app/details";
+import { useEffect } from "react";
 
 //---------------- getting prev saved movies from local storage --------------------------------//
 
@@ -22,6 +23,15 @@ const getFavoritesStorage = async (): Promise<Movie[]> => {
   }
 };
 
+// running asyncthunk to fetch the data from local storage -------------------/
+export const fetchFavorites = createAsyncThunk(
+  "favorites/fetchFavorites",
+  async (thunkAPI) => {
+    const favorites = await getFavoritesStorage();
+    thunkAPI.dispatch(setMovies(favorites));
+  }
+);
+
 const favoriteSlice = createSlice({
   name: "favoriteMovies",
   initialState: {
@@ -42,10 +52,14 @@ const favoriteSlice = createSlice({
       state.movies = newMovies;
       saveFavoritesStorage(state.movies);
     },
+
+    setMovies: (state, action: PayloadAction<Movie[]>) => {
+      state.movies = action.payload;
+    },
   },
 });
 
-export const { addMovie, removeMovie } = favoriteSlice.actions;
+export const { addMovie, removeMovie, setMovies } = favoriteSlice.actions;
 export default favoriteSlice.reducer;
 const saveFavoritesStorage = async (moviesValue: Movie[]) => {
   try {
