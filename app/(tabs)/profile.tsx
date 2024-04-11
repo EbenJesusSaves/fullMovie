@@ -26,21 +26,6 @@ import { Movie } from "../details";
 const Tab = () => {
   const [favorites, setFavorites] = useState([]);
   const userprofile = useSelector((state: RootStateForSelectors) => state.user);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const {
-  //         data: { data },
-  //       } = await yifyApi.get("list_movies.json");
-
-  //       setFavorites(data?.movies);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   })();
-  // }, []);
-
   const getFavoritesStorage = async (): Promise<Movie[]> => {
     try {
       const receivedData = await AsyncStorage.getItem(`@movies`);
