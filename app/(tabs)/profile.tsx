@@ -21,22 +21,43 @@ import { Colors } from "../../components/UI";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import { RootState, RootStateForSelectors } from "../../redux/store/store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Movie } from "../details";
 const Tab = () => {
   const [favorites, setFavorites] = useState([]);
   const userprofile = useSelector((state: RootStateForSelectors) => state.user);
-  console.log(userprofile);
-  useEffect(() => {
-    (async () => {
-      try {
-        const {
-          data: { data },
-        } = await yifyApi.get("list_movies.json");
 
-        setFavorites(data?.movies);
-      } catch (error) {
-        console.log(error);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const {
+  //         data: { data },
+  //       } = await yifyApi.get("list_movies.json");
+
+  //       setFavorites(data?.movies);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
+  // }, []);
+
+  const getFavoritesStorage = async (): Promise<Movie[]> => {
+    try {
+      const receivedData = await AsyncStorage.getItem(`@movies`);
+
+      if (receivedData != null) {
+        const pursedData = JSON.parse(receivedData);
+        setFavorites(pursedData);
+        return pursedData;
       }
-    })();
+      return [];
+    } catch (error) {
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    getFavoritesStorage();
   }, []);
 
   //-------------------- user login --------------------//

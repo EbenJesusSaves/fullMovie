@@ -12,7 +12,7 @@ interface FavReducer {
 const getFavoritesStorage = async (): Promise<Movie[]> => {
   try {
     const receivedData = await AsyncStorage.getItem(`@movies`);
-
+    console.log(receivedData);
     if (receivedData != null) {
       const pursedData = JSON.parse(receivedData);
       return pursedData;
@@ -26,9 +26,9 @@ const getFavoritesStorage = async (): Promise<Movie[]> => {
 // running asyncthunk to fetch the data from local storage -------------------/
 export const fetchFavorites = createAsyncThunk(
   "favorites/fetchFavorites",
-  async (thunkAPI) => {
+  async () => {
     const favorites = await getFavoritesStorage();
-    thunkAPI.dispatch(setMovies(favorites));
+    return favorites;
   }
 );
 
@@ -40,6 +40,7 @@ const favoriteSlice = createSlice({
   reducers: {
     addMovie: (state, { payload }: PayloadAction<Movie>) => {
       state.movies.unshift(payload);
+
       saveFavoritesStorage(state.movies);
 
       //   const prevFavs = await getFavoritesStorage();
@@ -57,6 +58,11 @@ const favoriteSlice = createSlice({
       state.movies = action.payload;
     },
   },
+  // extraReducers: (builder) => {
+  //   builder.addCase(fetchFavorites.fulfilled, (state, action) => {
+  //     state.movies = action.payload;
+  //   });
+  // },
 });
 
 export const { addMovie, removeMovie, setMovies } = favoriteSlice.actions;
