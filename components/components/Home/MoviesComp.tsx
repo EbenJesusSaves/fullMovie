@@ -19,6 +19,7 @@ import BottomSheet, {
 import LottieView from "lottie-react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Link } from "expo-router";
+import * as Haptics from "expo-haptics";
 //listEmpty Comp
 //list footer component
 
@@ -146,6 +147,7 @@ export const MoviesList = () => {
               }}
             >
               <TouchableOpacity
+                onPress={() => Haptics.selectionAsync()}
                 style={{
                   alignItems: "center",
                   flex: 1,

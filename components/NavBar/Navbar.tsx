@@ -1,17 +1,11 @@
 import React from "react";
-import {
-  Alert,
-  Pressable,
-  Text,
-  TouchableOpacity,
-  Vibration,
-  View,
-} from "react-native";
+import { Alert, Pressable, Text, TouchableOpacity, View } from "react-native";
 import { Colors } from "../UI";
 import { AntDesign } from "@expo/vector-icons";
 import { FlexBox } from "../UI/UtilStyles";
 import { Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import * as Haptics from "expo-haptics";
 export const Navbar = () => {
   return (
     <FlexBox style={{ justifyContent: "space-between" }}>
@@ -23,7 +17,7 @@ export const Navbar = () => {
         <Link asChild href={"searchScreen"}>
           <TouchableOpacity
             onPress={() => {
-              Vibration.vibrate(100);
+              Haptics.selectionAsync();
             }}
           >
             <AntDesign name="search1" size={24} color="white" />
