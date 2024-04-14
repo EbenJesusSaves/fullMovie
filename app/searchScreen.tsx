@@ -33,7 +33,6 @@ const searchScreen = () => {
       }
     })();
   }, [searchQuery]);
-  console.log(movies);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
