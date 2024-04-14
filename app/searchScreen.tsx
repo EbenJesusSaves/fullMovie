@@ -1,11 +1,15 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
-import { SmallSpicer, SmallWhiteText } from "../components/UI/UtilStyles";
+import {
+  CenteredView,
+  SmallSpicer,
+  SmallWhiteText,
+} from "../components/UI/UtilStyles";
 import { Searchbar } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { yifyApi } from "../apis/axios/config";
 import { MasonryFlashList } from "@shopify/flash-list";
-import { SCREEN_HEIGHT } from "../components/UI";
+import { Colors, SCREEN_HEIGHT } from "../components/UI";
 import LottieView from "lottie-react-native";
 import { Link } from "expo-router";
 
@@ -33,17 +37,28 @@ const searchScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <SmallWhiteText>searchScreen</SmallWhiteText>
-      <Searchbar value={searchQuery} onChangeText={setSearchQuery} />
+      <Searchbar
+        theme={{
+          colors: { primary: Colors.main },
+        }}
+        iconColor={Colors.main}
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+      />
       <SmallSpicer />
       <View style={{ flex: 1 }}>
         {!movies?.length ? (
-          <LottieView
-            source={require("../components/loaders/search.json")}
-            autoPlay={true}
-            loop={true}
-            style={{ alignItems: "center", height: 600, width: 600 }}
-          />
+          <CenteredView>
+            <LottieView
+              source={require("../components/loaders/searching.json")}
+              autoPlay={true}
+              loop={true}
+              style={{ alignItems: "center", height: 400, width: 400 }}
+            />
+            <SmallWhiteText style={{ color: Colors.main }}>
+              Start typing to search! 🔭
+            </SmallWhiteText>
+          </CenteredView>
         ) : (
           <MasonryFlashList
             data={movies}
