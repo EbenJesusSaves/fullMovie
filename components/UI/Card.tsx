@@ -55,14 +55,14 @@ export const Card = ({ item, dynamicHeight }: Card) => {
             <MaterialCommunityIcons
               name="movie-play"
               size={12}
-              color={Colors.main}
+              color={Colors?.main}
             />{" "}
-            {item?.genres[0]}
+            {item?.genres?.[0]}
             {"  "}
             <MaterialCommunityIcons
               name="movie-check-outline"
               size={12}
-              color={Colors.main}
+              color={Colors?.main}
             />{" "}
             {item?.year}
           </Text>

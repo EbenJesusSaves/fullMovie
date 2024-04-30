@@ -58,11 +58,11 @@ const favoriteSlice = createSlice({
       state.movies = action.payload;
     },
   },
-  // extraReducers: (builder) => {
-  //   builder.addCase(fetchFavorites.fulfilled, (state, action) => {
-  //     state.movies = action.payload;
-  //   });
-  // },
+  extraReducers: (builder) => {
+    builder.addCase(fetchFavorites.fulfilled, (state, action) => {
+      state.movies = action.payload;
+    });
+  },
 });
 
 export const { addMovie, removeMovie, setMovies } = favoriteSlice.actions;

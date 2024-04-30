@@ -7,7 +7,12 @@ import {
   Platform,
   Linking,
 } from "react-native";
-import { Link, useLocalSearchParams, useRouter } from "expo-router";
+import {
+  Link,
+  useFocusEffect,
+  useLocalSearchParams,
+  useRouter,
+} from "expo-router";
 import YoutubePlayer from "react-native-youtube-iframe";
 import { Colors, SCREEN_HEIGHT } from "../components/UI";
 import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
@@ -172,6 +177,13 @@ export default function Details() {
   // };
 
   const dispatch = useDispatch();
+  useFocusEffect(
+    useCallback(() => {
+      if (details.title_english) {
+        dispatch(addMovie(details));
+      }
+    }, [details])
+  );
 
   useEffect(() => {
     (async () => {
@@ -280,11 +292,7 @@ export default function Details() {
             marginTop: 16,
           }}
         >
-          <TouchableOpacity
-            onPress={() => {
-              dispatch(addMovie(details));
-            }}
-          >
+          <TouchableOpacity onPress={() => {}}>
             <CenteredView>
               <MaterialCommunityIcons
                 name="view-grid-plus"

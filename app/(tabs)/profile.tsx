@@ -1,5 +1,5 @@
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@gorhom/bottom-sheet";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -15,7 +15,7 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import { Foundation } from "@expo/vector-icons";
 import styled from "styled-components";
 import { backendAPI, yifyApi } from "../../apis/axios/config";
-import { Link } from "expo-router";
+import { Link, useFocusEffect } from "expo-router";
 import { Card } from "../../components/UI/Card";
 import { Colors } from "../../components/UI";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -41,9 +41,12 @@ const Tab = () => {
     }
   };
 
-  useEffect(() => {
-    getFavoritesStorage();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getFavoritesStorage();
+    }, [])
+  );
+  useEffect(() => {}, []);
 
   //-------------------- user login --------------------//
   // const login = async () => {
@@ -208,6 +211,7 @@ const Tab = () => {
             justifyContent: "space-between",
             paddingRight: 15,
           }}
+          onPress={getFavoritesStorage}
         >
           <View
             style={{
