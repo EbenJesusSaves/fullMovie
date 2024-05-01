@@ -2,22 +2,23 @@ import {
   View,
   Text,
   ScrollView,
-  Pressable,
   TouchableOpacity,
   Button,
   Platform,
   Linking,
 } from "react-native";
-import { Link, Stack, useLocalSearchParams, useRouter } from "expo-router";
+import {
+  Link,
+  useFocusEffect,
+  useLocalSearchParams,
+  useRouter,
+} from "expo-router";
 import YoutubePlayer from "react-native-youtube-iframe";
 import { Colors, SCREEN_HEIGHT } from "../components/UI";
 import { SCREEN_WIDTH } from "@gorhom/bottom-sheet";
 import { LinearGradient } from "expo-linear-gradient";
-import Animated from "react-native-reanimated";
 import { Image } from "expo-image";
-import * as Sharing from "expo-sharing";
 
-import * as Permissions from "expo-permissions";
 import {
   CenteredView,
   SmallSpicer,
@@ -31,6 +32,8 @@ import { yifyApi } from "../apis/axios/config";
 import Popover from "react-native-popover-view/dist/Popover";
 import { Placement } from "react-native-popover-view/dist/Types";
 import { isIOS } from "@rneui/base";
+import { useDispatch } from "react-redux";
+import { addMovie } from "../redux/reducers/favoriteReducer";
 
 export interface Movie {
   background_image: string;
@@ -173,6 +176,15 @@ export default function Details() {
   //   }
   // };
 
+  const dispatch = useDispatch();
+  useFocusEffect(
+    useCallback(() => {
+      if (details.title_english) {
+        dispatch(addMovie(details));
+      }
+    }, [details])
+  );
+
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -280,21 +292,31 @@ export default function Details() {
             marginTop: 16,
           }}
         >
-          <CenteredView>
-            <MaterialCommunityIcons
-              name="view-grid-plus"
-              size={24}
-              color="white"
-            />
-            <SmallWhiteText style={{ marginTop: 8 }}>
-              Add to list
-            </SmallWhiteText>
-          </CenteredView>
-          <CenteredView>
-            <MaterialCommunityIcons name="movie-roll" size={24} color="white" />
+          <TouchableOpacity onPress={() => {}}>
+            <CenteredView>
+              <MaterialCommunityIcons
+                name="view-grid-plus"
+                size={24}
+                color="white"
+              />
+              <SmallWhiteText style={{ marginTop: 8 }}>
+                Add to list
+              </SmallWhiteText>
+            </CenteredView>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <CenteredView>
+              <MaterialCommunityIcons
+                name="movie-roll"
+                size={24}
+                color="white"
+              />
 
-            <SmallWhiteText style={{ marginTop: 8 }}>Watch Now</SmallWhiteText>
-          </CenteredView>
+              <SmallWhiteText style={{ marginTop: 8 }}>
+                Watch Now
+              </SmallWhiteText>
+            </CenteredView>
+          </TouchableOpacity>
           <TouchableOpacity
           // onPress={shareLink}
           >

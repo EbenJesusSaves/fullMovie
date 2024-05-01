@@ -15,7 +15,7 @@ const editProfile = () => {
   const params = useLocalSearchParams();
   const [email, setEmail] = useState(params.email);
   const [username, setUsername] = useState(params.username);
-
+  console.log(params);
   //----------------------- image picker for selecting profile pictures -----------------------//
   const [imageUri, setImageUri] = useState(null);
   const [fileName, setFileName] = useState();

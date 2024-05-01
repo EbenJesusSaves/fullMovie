@@ -1,5 +1,5 @@
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@gorhom/bottom-sheet";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -15,42 +15,51 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import { Foundation } from "@expo/vector-icons";
 import styled from "styled-components";
 import { backendAPI, yifyApi } from "../../apis/axios/config";
-import { Link } from "expo-router";
+import { Link, useFocusEffect } from "expo-router";
 import { Card } from "../../components/UI/Card";
 import { Colors } from "../../components/UI";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import { RootState, RootStateForSelectors } from "../../redux/store/store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Movie } from "../details";
 const Tab = () => {
   const [favorites, setFavorites] = useState([]);
   const userprofile = useSelector((state: RootStateForSelectors) => state.user);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const {
-          data: { data },
-        } = await yifyApi.get("list_movies.json");
-
-        setFavorites(data?.movies);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
-
-  //-------------------- user login --------------------//
-  const login = async () => {
+  const getFavoritesStorage = async (): Promise<Movie[]> => {
     try {
-      console.log("hi");
-      const { data } = await backendAPI.post("/signIn", {
-        username: "Ellsa",
-        password: "password",
-      });
+      const receivedData = await AsyncStorage.getItem(`@movies`);
+
+      if (receivedData != null) {
+        const pursedData = JSON.parse(receivedData);
+        setFavorites(pursedData);
+        return pursedData;
+      }
+      return [];
     } catch (error) {
-      console.log(error);
+      return [];
     }
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      getFavoritesStorage();
+    }, [])
+  );
+  useEffect(() => {}, []);
+
+  //-------------------- user login --------------------//
+  // const login = async () => {
+  //   try {
+  //     console.log("hi");
+  //     const { data } = await backendAPI.post("/signIn", {
+  //       username: "Ellsa",
+  //       password: "password",
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -107,7 +116,7 @@ const Tab = () => {
                 }}
               >
                 <TouchableOpacity
-                  onPress={login}
+                  // onPress={login}
                   style={{
                     display: "flex",
                     flexDirection: "row",
@@ -202,6 +211,7 @@ const Tab = () => {
             justifyContent: "space-between",
             paddingRight: 15,
           }}
+          onPress={getFavoritesStorage}
         >
           <View
             style={{

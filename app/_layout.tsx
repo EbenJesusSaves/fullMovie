@@ -99,6 +99,15 @@ function RootLayoutNav() {
             animation: "slide_from_left",
           }}
         />
+        <Stack.Screen
+          name="searchScreen"
+          options={{
+            headerShown: false,
+            title: params.name as string,
+            presentation: "modal",
+            animation: "slide_from_left",
+          }}
+        />
       </Stack>
     </ThemeProvider>
   );

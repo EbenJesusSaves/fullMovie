@@ -62,7 +62,7 @@ export const GreetingsComponent = () => {
             <Image
               contentFit="cover"
               style={{ flex: 1, height: 200, borderRadius: 15 }}
-              source={`https://image.tmdb.org/t/p/w500${item.backdrop_path}`}
+              source={`https://image.tmdb.org/t/p/w500${item?.backdrop_path}`}
             />
             <BlurView
               intensity={10}
@@ -95,7 +95,7 @@ export const GreetingsComponent = () => {
                   borderColor: Colors.main,
                 }}
               >
-                {item.vote_average.toFixed(1)}
+                {item?.vote_average?.toFixed(1)}
               </Text>
               <Text style={{ fontSize: 15, color: "white" }}>
                 {item.original_title}
@@ -108,8 +108,8 @@ export const GreetingsComponent = () => {
                     fontWeight: "500",
                   }}
                 >
-                  <Text style={{ color: Colors.main }}>Release Date {""}</Text>
-                  {item.release_date}
+                  <Text style={{ color: Colors?.main }}>Release Date {""}</Text>
+                  {item?.release_date}
                 </Text>
               </Text>
             </BlurView>
