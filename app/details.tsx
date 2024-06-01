@@ -6,6 +6,7 @@ import {
   Button,
   Platform,
   Linking,
+  LayoutChangeEvent,
 } from "react-native";
 import {
   Link,
@@ -21,7 +22,9 @@ import { Image } from "expo-image";
 
 import {
   CenteredView,
+  FlexBox,
   SmallSpicer,
+  SmallText,
   SmallWhiteText,
   ViewWithMargin,
   blurhash,
@@ -34,6 +37,7 @@ import { Placement } from "react-native-popover-view/dist/Types";
 import { isIOS } from "@rneui/base";
 import { useDispatch } from "react-redux";
 import { addMovie } from "../redux/reducers/favoriteReducer";
+import WebView from "react-native-webview";
 
 export interface Movie {
   background_image: string;
@@ -110,11 +114,13 @@ export default function Details() {
   const [vidState, setVidState] = useState();
   const [similarMovies, setSimilarMovies] = useState<Movie[]>([]);
   const scrollViewRef = useRef<ScrollView>(null);
+  const watchNow = useRef(null);
+
   const [currentId, setCurrentId] = useState<{ imd: string; id: string }>({
     imd: params.imdb_id as string,
     id: params.id as string,
   });
-
+  const [movieid, setMoviesId] = useState();
   const movie: Movie = {
     background_image: "",
     background_image_original: "",
@@ -156,6 +162,15 @@ export default function Details() {
     setVidState(state);
   }, []);
 
+  const watchNowRef = useRef<View>(null);
+  let watchNowPosition = 1800;
+  const handleLayout = (event: LayoutChangeEvent) => {
+    watchNowPosition = event.nativeEvent.layout.y;
+  };
+
+  const handlePress = () => {
+    scrollViewRef.current?.scrollTo({ y: watchNowPosition, animated: true });
+  };
   // const requestPermissions = async () => {
   //   const { status } = await Permissions.askAsync(
   //     Permissions.READ_EXTERNAL_STORAGE
@@ -175,7 +190,7 @@ export default function Details() {
   //     console.error(error.message);
   //   }
   // };
-
+  console.log(movieDetails?.imdb_code, movieDetails?.id);
   const dispatch = useDispatch();
   useFocusEffect(
     useCallback(() => {
@@ -260,7 +275,6 @@ export default function Details() {
           />
         </View>
       )}
-
       <LinearGradient
         // Background Linear Gradient
         colors={["transparent", "rgba(0,0,0,1)"]}
@@ -271,7 +285,6 @@ export default function Details() {
           height: 400,
         }}
       />
-
       <View style={{ top: -420, justifyContent: "center" }}>
         <Text
           style={{
@@ -349,7 +362,6 @@ export default function Details() {
             ))}
           </ViewWithMargin>
         </ScrollView>
-
         <View>
           <SmallSpicer />
           <ViewWithMargin style={{ flexDirection: "row", gap: 20 }}>
@@ -458,114 +470,145 @@ export default function Details() {
                   color: Colors.main,
                 }}
               >
-                Downloads for Android
+                Watch / Download movie
               </SmallWhiteText>
-              <Popover
-                placement={"floating" as Placement}
-                from={
-                  <TouchableOpacity>
-                    <SmallWhiteText>Press here to open popover!</SmallWhiteText>
-                  </TouchableOpacity>
-                }
-              >
-                <CenteredView style={{ backgroundColor: Colors.primary }}>
-                  <View
-                    style={{
-                      width: SCREEN_WIDTH - 90,
-                      backgroundColor: Colors.main,
-                      height: SCREEN_HEIGHT / 9,
-                      padding: 10,
-                    }}
-                  >
-                    <MaterialCommunityIcons
-                      name="content-save-check"
-                      size={30}
-                      color="black"
-                    />
-                    <Text style={{ fontWeight: "500", fontSize: 17 }}>
-                      Download / Save Movie
-                    </Text>
-                  </View>
-
-                  <TouchableOpacity
-                    onPress={() => {}}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-
-                      marginBottom: 10,
-                    }}
-                  >
-                    <SmallWhiteText
+              <FlexBox style={{ gap: 10 }}>
+                <Popover
+                  placement={"floating" as Placement}
+                  from={
+                    <TouchableOpacity
                       style={{
-                        marginTop: 15,
-                        borderColor: Colors.main,
-                        borderWidth: 0.8,
-                        backgroundColor: "rgba(208, 255, 73, 0.2)",
-                        fontSize: 14,
-                        paddingVertical: 10,
-                        paddingHorizontal: SCREEN_WIDTH / 5,
+                        display: "flex",
+                        justifyContent: "center",
+                        backgroundColor: Colors.primary,
+                        width: SCREEN_WIDTH / 4,
+                        height: 40,
                         borderRadius: 10,
-                        overflow: "hidden",
                       }}
                     >
-                      Add to Watch List
-                    </SmallWhiteText>
-                  </TouchableOpacity>
-                  <View
-                    style={{
-                      borderWidth: 0.7,
-                      width: SCREEN_WIDTH / 1.45,
-                      borderColor: Colors.dark_gray,
-                      borderRadius: 4,
-                      marginBottom: 10,
-                      paddingTop: 10,
-                      paddingLeft: 8,
-                    }}
-                  >
-                    {movieDetails?.torrents?.map((m) => (
-                      <TouchableOpacity
-                        onPress={() => {
-                          console.log(movie);
-                          Linking.openURL(isIOS ? details?.url : m?.url);
-                        }}
+                      <Text style={{ color: "white", textAlign: "center" }}>
+                        Download
+                      </Text>
+                    </TouchableOpacity>
+                  }
+                >
+                  <CenteredView style={{ backgroundColor: Colors.primary }}>
+                    <View
+                      style={{
+                        width: SCREEN_WIDTH - 90,
+                        backgroundColor: Colors.main,
+                        height: SCREEN_HEIGHT / 9,
+                        padding: 10,
+                      }}
+                    >
+                      <MaterialCommunityIcons
+                        name="content-save-check"
+                        size={30}
+                        color="black"
+                      />
+                      <TouchableOpacity>
+                        <Text style={{ fontWeight: "500", fontSize: 17 }}>
+                          Download / Save Movie
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    <TouchableOpacity
+                      onPress={() => {}}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+
+                        marginBottom: 10,
+                      }}
+                    >
+                      <SmallWhiteText
                         style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          position: "relative",
-                          marginRight: 10,
-                          marginBottom: 20,
+                          marginTop: 15,
+                          borderColor: Colors.main,
+                          borderWidth: 0.8,
+                          backgroundColor: "rgba(208, 255, 73, 0.2)",
+                          fontSize: 14,
+                          paddingVertical: 10,
+                          paddingHorizontal: SCREEN_WIDTH / 5,
+                          borderRadius: 10,
+                          overflow: "hidden",
                         }}
                       >
-                        <SmallWhiteText>
-                          Size:{" "}
-                          <SmallWhiteText style={{ color: Colors.main }}>
-                            {m.size}
-                          </SmallWhiteText>{" "}
-                          Quality:{" "}
-                          <SmallWhiteText style={{ color: Colors.main }}>
-                            {m.quality}
-                          </SmallWhiteText>{" "}
-                        </SmallWhiteText>
-                        <SmallWhiteText
+                        Add to Watch List
+                      </SmallWhiteText>
+                    </TouchableOpacity>
+                    <View
+                      style={{
+                        borderWidth: 0.7,
+                        width: SCREEN_WIDTH / 1.45,
+                        borderColor: Colors.dark_gray,
+                        borderRadius: 4,
+                        marginBottom: 10,
+                        paddingTop: 10,
+                        paddingLeft: 8,
+                      }}
+                    >
+                      {movieDetails?.torrents?.map((m) => (
+                        <TouchableOpacity
+                          onPress={() => {
+                            console.log(movie);
+                            Linking.openURL(isIOS ? details?.url : m?.url);
+                          }}
                           style={{
-                            backgroundColor: Colors.main,
-                            color: "black",
-                            padding: 5,
-                            borderRadius: 10,
-                            overflow: "hidden",
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            position: "relative",
+                            marginRight: 10,
+                            marginBottom: 20,
                           }}
                         >
-                          {isIOS ? "Watch Now" : "Download"}
-                        </SmallWhiteText>
-                      </TouchableOpacity>
-                    ))}
-                  </View>
-                </CenteredView>
-              </Popover>
+                          <SmallWhiteText>
+                            Size:{" "}
+                            <SmallWhiteText style={{ color: Colors.main }}>
+                              {m.size}
+                            </SmallWhiteText>{" "}
+                            Quality:{" "}
+                            <SmallWhiteText style={{ color: Colors.main }}>
+                              {m.quality}
+                            </SmallWhiteText>{" "}
+                          </SmallWhiteText>
+                          <SmallWhiteText
+                            style={{
+                              backgroundColor: Colors.main,
+                              color: "black",
+                              padding: 5,
+                              borderRadius: 10,
+                              overflow: "hidden",
+                            }}
+                          >
+                            {isIOS ? "Watch Now" : "Download"}
+                          </SmallWhiteText>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  </CenteredView>
+                </Popover>
+                <TouchableOpacity
+                  onLayout={handleLayout}
+                  onPress={handlePress}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    backgroundColor: Colors.nearlyRed,
+                    width: SCREEN_WIDTH / 3,
+                    height: 40,
+                    borderRadius: 10,
+                  }}
+                >
+                  <Text style={{ color: "white", textAlign: "center" }}>
+                    Watch Now
+                  </Text>
+                </TouchableOpacity>
+              </FlexBox>
             </View>
 
             <SmallWhiteText
@@ -604,6 +647,30 @@ export default function Details() {
               ))}
             </ScrollView>
           </View>
+        </View>
+        <View
+          ref={watchNowRef}
+          style={{
+            paddingHorizontal: 1,
+            backgroundColor: Colors.main,
+            paddingVertical: 20,
+            borderRadius: 15,
+            overflow: "hidden",
+          }}
+        >
+          {
+            <WebView
+              style={{
+                height: 300,
+                width: 389,
+                borderRadius: 10,
+                overflow: "hidden",
+              }}
+              source={{
+                uri: `https://vidsrc.to/embed/movie/${currentId.imd}`,
+              }}
+            />
+          }
         </View>
       </View>
 
