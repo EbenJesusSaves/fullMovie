@@ -667,7 +667,7 @@ export default function Details() {
                 overflow: "hidden",
               }}
               source={{
-                uri: `https://vidsrc.to/embed/movie/${currentId.imd}`,
+                uri: `https://vidsrc.xyz/embed/movie/${currentId.imd}`,
               }}
             />
           }
