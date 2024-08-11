@@ -1,3 +1,4 @@
+import { Button } from "@rneui/base";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
@@ -9,8 +10,7 @@ const Tab = () => {
   const [prompt, setPrompt] = useState("");
   const getChat = async () => {
     setLoading(true);
-
-    const body = JSON.stringify({
+    const body = {
       model: "Awanllm-Llama-3-8B-Dolfin",
       messages: [
         {
@@ -26,7 +26,7 @@ const Tab = () => {
       top_p: 0.9,
       top_k: 40,
       max_tokens: 1024,
-    });
+    };
     try {
       const { data } = await axios.post(
         "https://api.awanllm.com/v1/chat/completions",
@@ -54,6 +54,7 @@ const Tab = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View>
+        <Button onPress={getChat}>Press to get Chat</Button>
         <Text style={{ color: "white" }}>testNav tested this one too </Text>
       </View>
     </SafeAreaView>
