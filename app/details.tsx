@@ -29,7 +29,7 @@ import {
   ViewWithMargin,
   blurhash,
 } from "../components/UI/UtilStyles";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { yifyApi } from "../apis/axios/config";
 import Popover from "react-native-popover-view/dist/Popover";
@@ -38,6 +38,7 @@ import { isIOS } from "@rneui/base";
 import { useDispatch } from "react-redux";
 import { addMovie } from "../redux/reducers/favoriteReducer";
 import WebView from "react-native-webview";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export interface Movie {
   background_image: string;
@@ -108,6 +109,7 @@ interface FetchedMovie {
 export default function Details() {
   const router = useRouter();
   const params = useLocalSearchParams();
+  const [getPrevFav, setPrevFav] = useState<Movie[] | []>();
   const [movieDetails, setMoviesDetails] = useState<Movie>();
   const [loading, setLoading] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -190,7 +192,36 @@ export default function Details() {
   //     console.error(error.message);
   //   }
   // };
-  console.log(movieDetails?.imdb_code, movieDetails?.id);
+  useEffect(() => {
+    (async () => {
+      const d = await AsyncStorage.getItem("eb_fav_movies");
+      const prevFavMovies = JSON.parse(d as string);
+      console.log(prevFavMovies);
+    })();
+  }, []);
+
+  let favoriteArray: Movie[] = [];
+  const addAndRemoveFav = async (movie: Movie) => {
+    console.log("action", movie);
+    let index = favoriteArray.findIndex((e) => e.imdb_code === movie.imdb_code);
+    if (index !== -1) {
+      console.log("hre");
+      favoriteArray.splice(index, 1);
+      await AsyncStorage.setItem(
+        "eb_fav_movies",
+        JSON.stringify(favoriteArray)
+      );
+    } else {
+      console.log("there");
+      favoriteArray.push(movie);
+      await AsyncStorage.setItem(
+        "eb_fav_movies",
+        JSON.stringify(favoriteArray)
+      );
+      console.log(favoriteArray);
+    }
+  };
+
   const dispatch = useDispatch();
   useFocusEffect(
     useCallback(() => {
@@ -305,16 +336,10 @@ export default function Details() {
             marginTop: 16,
           }}
         >
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={() => addAndRemoveFav(details)}>
             <CenteredView>
-              <MaterialCommunityIcons
-                name="view-grid-plus"
-                size={24}
-                color="white"
-              />
-              <SmallWhiteText style={{ marginTop: 8 }}>
-                Add to list
-              </SmallWhiteText>
+              <MaterialIcons name="favorite" size={24} color="white" />
+              <SmallWhiteText style={{ marginTop: 8 }}>Favorite</SmallWhiteText>
             </CenteredView>
           </TouchableOpacity>
           <TouchableOpacity>
