@@ -31,7 +31,7 @@ export const CustomBottomTab = ({ state, descriptors, navigation }) => {
       case "explore":
         return "compass";
       case "saved":
-        return "heart";
+        return "star-four-points-outline";
       case "profile":
         return "user";
       default:

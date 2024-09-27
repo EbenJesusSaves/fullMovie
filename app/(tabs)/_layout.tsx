@@ -32,7 +32,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="saved"
         options={{
-          title: "saved",
+          title: "AI",
           href: null,
         }}
       />

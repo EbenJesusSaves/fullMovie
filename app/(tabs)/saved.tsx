@@ -1,6 +1,5 @@
-import { Button } from "@rneui/base";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,11 +14,11 @@ import { MasonryFlashList } from "@shopify/flash-list";
 import { Card } from "../../components/UI/Card";
 const Tab = () => {
   const [loading, setLoading] = useState(false);
-  const [stream, setStream] = useState();
-  const [prompt, setPrompt] = useState("");
   const [text, setText] = useState("");
   const [movies, setMovies] = useState<any>([]);
   const getChat = async () => {
+    if (!text) return;
+
     setLoading(true);
     const body = {
       model: "Awanllm-Llama-3-8B-Dolfin",
@@ -49,13 +48,13 @@ const Tab = () => {
           },
         }
       );
-      setStream(data.choices[0]?.message?.content);
+      const searchQuery = data.choices[0]?.message?.content;
 
       //fetch movies
       try {
         const {
           data: { data },
-        } = await yifyApi.get(`list_movies.json?query_term=$${stream}`);
+        } = await yifyApi.get(`list_movies.json?query_term=$${searchQuery}`);
 
         setMovies(data?.movies);
         setLoading(false);
@@ -68,11 +67,8 @@ const Tab = () => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    getChat();
-  }, []);
 
-  console.log(stream, movies);
+  // console.log(stream, movies);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View>
@@ -126,10 +122,10 @@ const Tab = () => {
         <View style={{ flex: 1 }}>
           <CenteredView>
             <LottieView
-              source={require("../../components/loaders/tothemoon.json")}
+              source={require("../../components/loaders/AI.json")}
               autoPlay={true}
               loop={true}
-              style={{ alignItems: "center", height: 400, width: 400 }}
+              style={{ alignItems: "center", height: 300, width: 400 }}
             />
             <SmallWhiteText style={{ color: Colors.main }}>
               Just describe how you feel currently
@@ -144,10 +140,11 @@ const Tab = () => {
                 source={require("../../components/loaders/tothemoon.json")}
                 autoPlay={true}
                 loop={true}
-                style={{ alignItems: "center", height: 400, width: 400 }}
+                style={{ alignItems: "center", height: 300, width: 400 }}
               />
               <SmallWhiteText style={{ color: Colors.main }}>
-                Just describe how you feel currently
+                Having Cozy day? perhaps on top of the the mood, just let us
+                Know
               </SmallWhiteText>
             </CenteredView>
           ) : (
